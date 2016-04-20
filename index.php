@@ -10,11 +10,15 @@
   <body>
     <div class="container">
 
-      <header></header>
+      <header>
+        <h1 class="page-header">Introduction to Web Programming</h1>
+      </header>
 
-      <section></section>
-
-      <footer></footer>
+      <section>
+        <ul>
+          <li><a href="/lesson-01/lesson-01.pdf">Lesson 01 - Introduction to Server Side Programming</a></li>
+        </ul>
+      </section>
       
     </div>
 
