@@ -18,7 +18,7 @@
         <br><br>
         <h2>Testing $_POST</h2><hr>
         <?php
-          echo var_dump($_POST);
+          echo '<pre>', var_dump($_POST), '</pre>';
         ?>
       </section>
 
