@@ -41,7 +41,7 @@
         </div>
       </section>
 
-      <!-- Step 3 - Upload to your web server and submit your link on Blackboard for 5 marks -->
+      <!-- Step 4 - Upload to your web server and submit your link on Blackboard for 5 marks -->
       
     </div>
 
