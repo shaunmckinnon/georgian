@@ -18,10 +18,10 @@
         <br><br>
         <h2>Testing $_POST</h2><hr>
         <?php
-          echo '<pre>', var_export($_POST), '</pre>';
+          echo var_dump($_POST);
         ?>
       </section>
-      
+
       <p>
         <a href="forms-explored.php">Back</a>
       </p>

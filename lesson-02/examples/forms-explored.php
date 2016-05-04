@@ -54,7 +54,7 @@
             ?>
             <?php foreach ( $hobbies as $hobby ): ?>
               <label class="checkbox-inline">
-                <input type="checkbox" name="hobbies" value="<?= $hobby; ?>"><?= $hobby; ?>
+                <input type="checkbox" name="hobbies[]" value="<?= $hobby; ?>"><?= $hobby; ?>
               </label>
             <?php endforeach; ?>
           </div>
