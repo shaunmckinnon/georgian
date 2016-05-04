@@ -59,17 +59,13 @@
             <?php endforeach; ?>
           </div>
           <div class="form-group">
+            <label for="comment">Comment:</label>
+            <textarea class="form-control" name="comment" id="comment" placeholder="Enter a comment." required></textarea>
+          </div>
+          <div class="form-group">
             <button type="submit" class="btn btn-default">Submit</button>
           </div>
         </form>
-      </section>
-
-      <section>
-        <br><br>
-        <h2>Testing $_GET</h2><hr>
-        <p>
-          <a href="forms-explored-processed.php?name=Shaun%20McKinnon&email=shaun%2Emckinnon@georgiancollege%2Eca&newsletter=yes&country=Canada&hobbies[]=Games&hobbies[]=Investing&hobbies=Movies">Get <strong>Forms Explored Processed</strong></a>
-        </p>
       </section>
       
     </div>

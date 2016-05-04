@@ -21,16 +21,10 @@
           echo '<pre>', var_export($_POST), '</pre>';
         ?>
       </section>
-      <section>
-        <br><br>
-        <h2>Testing $_GET</h2><hr>
-        <?php
-          echo '<pre>', var_export($_GET), '</pre>';
-        ?>
-        <p>
-          <a href="forms-explored.php">Back</a>
-        </p>
-      </section>
+      
+      <p>
+        <a href="forms-explored.php">Back</a>
+      </p>
       
     </div>
 
