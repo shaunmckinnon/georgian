@@ -1,39 +1,34 @@
 <?php
 
-  // resume our session
-  session_start();
-
   // Check if the form has been submitted
   if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
     
     // get our connection script
     require_once( $_SERVER['DOCUMENT_ROOT'] . '/shared/connect.php' );
 
-    // build the SQL statment
+    // build the SQL statment with placeholders
     $sql = 'INSERT INTO artists (name, founded_date, bio_link, website) VALUES (:name, :founded_date, :bio_link, :website)';
 
-    // remember to catch your errors
-    try {
-      // prepare the SQL statment
-      $sth = $dbh->prepare($sql);
-      $sth->execute([
-        ':name' => $_POST['name'],
-        ':founded_date' => $_POST['founded-date'],
-        ':bio_link' => $_POST['bio-link'],
-        ':website' => $_POST['website']
-      ]);
+    // assign our values to variables
+    $name = $_POST['name'];
+    $founded_date = $_POST['founded-date'];
+    $bio_link = $_POST['bio-link'];
+    $website = $_POST['website'];
 
-      // close the DB connection
-      $dbh = null;
+    // prepare the SQL statment
+    $sth = $dbh->prepare($sql);
 
-      // create a success message and store it in our super global session variable
-      $_SESSION['success'] = 'New Artist created successfully';
+    // execute the SQL and bind the values
+    $sth->execute([
+      ':name' => $name,
+      ':founded_date' => $founded_date,
+      ':bio_link' => $bio_link,
+      ':website' => $website
+    ]);
 
-      // send user to success page
-      header( 'Location: new_artist.php' );
-    } catch (PDOException $e) {
-      echo "There was error adding the artist: {$e}";
-    }
+    // close the DB connection
+    $dbh = null;
 
   }
+  
 ?>

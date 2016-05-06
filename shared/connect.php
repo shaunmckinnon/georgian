@@ -1,7 +1,7 @@
 <?php
 
   // check if secrets exists
-  if ( file_exists('../../shared/secrets.json') ) {
+  if ( file_exists($_SERVER['DOCUMENT_ROOT'] . '/shared/secrets.json') ) {
 
     // get the file contents and json_decode them
     $secrets = json_decode( file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/shared/secrets.json') );
@@ -11,7 +11,7 @@
     $host = $secrets->{'PDO-connection'}->{'host'};
     $database = $secrets->{'PDO-connection'}->{'database'};
 
-
+    // make sure that each of the connection properties have values
     if ( !empty($username) && !empty($password) && !empty($host) && !empty($database) ) {
       // connect to our database
       try {
