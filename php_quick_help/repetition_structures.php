@@ -42,4 +42,9 @@
     echo $key . ' = ' . $value . '<br>';
   }
 
+  // shorthand foreach loop
+  foreach ($arr as $value):
+    echo $key . ' = ' . $value . '<br>';
+  endforeach;
+
 ?>
