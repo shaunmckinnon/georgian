@@ -1,13 +1,3 @@
-<?php
-
-  // list all the directories in the project
-  $Directory = new RecursiveDirectoryIterator('./');
-  $Iterator = new RecursiveIteratorIterator($Directory);
-  $Regex = new RegexIterator($Iterator, '/^.+\.php$/i', RecursiveRegexIterator::GET_MATCH);
-
-?>
-
-<!DOCTYPE HTML>
 <html lang="en">
 
   <head>
@@ -25,9 +15,7 @@
 
       <section>
         <ul>
-          <?php foreach ($Regex as $name => $object): ?>
-            <li><a href="<?= $name ?>" target="_blank"><?= $name ?></a></li>
-          <?php endforeach ?>
+          <li></li>
         </ul>
       </section>
       
