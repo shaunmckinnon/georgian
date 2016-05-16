@@ -7,6 +7,10 @@
   $date = date("Y-m-d H:i:s"); // returns current date and time on the server using the provided format
   echo $date;
 
+  // list() combines a list of variable names with values from an array
+  $user = ['Shaun', 37, '1978/12/22'];
+  list($name, $age, $birthdate) = $user;
+
 
   // condition and data checks
   $value = "shaun";
