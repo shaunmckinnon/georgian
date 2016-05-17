@@ -25,14 +25,15 @@
     if ( preg_match('/Azure/i', $_SERVER['HTTP_HOST']) ) {
       $conn_str = getenv("MYSQLCONNSTR_defaultConnection");
       $parts = explode(';', $conn_str);
+      
       $url = [];
       foreach ( $parts as $part ) {
         $temp = explode('=', $part);
         $url[$temp[0]] = $temp[1];
       }
-      echo '<pre>', var_dump($url), '</pre>';
+
       $host = $url["Data Source"];
-      $dbname = substr($url["Database"], 1);
+      $dbname = $url["Database"];
       $username = $url["User Id"];
       $password = $url["Password"];
     }
