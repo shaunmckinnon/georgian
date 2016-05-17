@@ -30,7 +30,7 @@
         $temp = explode('=', $part);
         $url[$temp[0]] = $temp[1];
       }
-      echo '<pre>', var_dump($url), '</pre>'
+      echo '<pre>', var_dump($url), '</pre>';
       $host = $url["Data Source"];
       $dbname = substr($url["Database"], 1);
       $username = $url["User Id"];
