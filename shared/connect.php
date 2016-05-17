@@ -10,13 +10,29 @@
       $username = $connection_details['username'];
       $password = $connection_details['password'];
     } else {
-      // remote server (Heroku)
+      // remote server
       $url = parse_url(getenv("CLEARDB_DATABASE_URL"));
-
-      $host = $url["host"];
-      $dbname = substr($url["path"], 1);
-      $username = $url["user"];
-      $password = $url["pass"];
+      // Heroku
+      if ( $url ) {
+        $host = $url["host"];
+        $dbname = substr($url["path"], 1);
+        $username = $url["user"];
+        $password = $url["pass"];
+      }
+      $conn_str = getenv("MYSQLCONNSTR_defaultConnection");
+      //Azure
+      if ( $conn_str ) {
+        $parts = explode(';', $conn_str);
+        $url = [];
+        foreach ( $parts as $part ) {
+          $temp = explode('=', $part);
+          $url[$temp[0]] = $temp[1];
+        }
+        $host = $url["Data Source"];
+        $dbname = substr($url["Database"], 1);
+        $username = $url["User Id"];
+        $password = $url["Password"];
+      }
     }
 
     // connect to our database
