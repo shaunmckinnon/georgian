@@ -1,7 +1,5 @@
 <?php
 
-    echo $_SERVER['HTTP_HOST'];
-
     // Localhost or Dreamhost
     if ( file_exists($_SERVER['DOCUMENT_ROOT'] . '/shared/secrets.php') ) {
       // local server
