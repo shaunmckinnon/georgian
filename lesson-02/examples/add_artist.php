@@ -5,7 +5,22 @@
   $bio_link = $_POST['bio_link'];
 
   // connection to database
-  $dbh = new PDO( "mysql:host=localhost;dbname=comp-1006-lesson-examples", "root", "root" );
+  // Heroku
+  if ( preg_match('/Heroku|georgian\.shaunmckinnon\.ca/i', $_SERVER['HTTP_HOST']) ) {
+    // remote server
+    $url = parse_url(getenv("CLEARDB_DATABASE_URL"));
+    $host = $url["host"];
+    $dbname = substr($url["path"], 1);
+    $username = $url["user"];
+    $password = $url["pass"];
+  } else { // localhost
+    $host = 'localhost';
+    $dbname = 'comp-1006-lesson-examples';
+    $username = 'root';
+    $password = 'root';
+  }
+
+  $dbh = new PDO( "mysql:host={$host};dbname={$dbname}", $username, $password );
   $dbh->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 
   // build the SQL
