@@ -77,7 +77,7 @@
           <legend>Product Information</legend>
           <div class="form-group">
             <label for="category_id">Category</label>
-            <select name="category_id">
+            <select name="category_id" required>
               <option selected>...select a category...</option>
               <?php foreach ( $result as $row ): ?>
                 <option value="<?= $row['id'] ?>"><?= $row['name'] ?></option>
@@ -87,7 +87,7 @@
 
           <div class="form-group">
             <label for="name">Name</label>
-            <input type="text" name="name" class="form-control">
+            <input type="text" name="name" class="form-control" required>
           </div>
 
           <div class="form-group">
@@ -97,7 +97,7 @@
 
           <div class="form-group">
             <label for="price">Price</label>
-            <input type="number" name="price" min="0" step="any" class="form-control">
+            <input type="number" name="price" min="0" step="any" class="form-control" required>
           </div>
 
           <div>
