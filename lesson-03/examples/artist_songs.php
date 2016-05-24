@@ -1,7 +1,22 @@
 <?php
 
   // get our connection script
-  require_once( $_SERVER['DOCUMENT_ROOT'] . '/shared/connect.php' );
+  if ( preg_match('/Heroku|georgian\.shaunmckinnon\.ca/i', $_SERVER['HTTP_HOST']) ) {
+    // remote server
+    $url = parse_url(getenv("CLEARDB_DATABASE_URL"));
+    $host = $url["host"];
+    $dbname = substr($url["path"], 1);
+    $username = $url["user"];
+    $password = $url["pass"];
+  } else { // localhost
+    $host = 'localhost';
+    $dbname = 'comp-1006-lesson-examples';
+    $username = 'root';
+    $password = 'root';
+  }
+
+  $dbh = new PDO( "mysql:host={$host};dbname={$dbname}", $username, $password );
+  $dbh->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 
   // get artist name
   $artist_sql = 'SELECT * FROM artists WHERE id = :id';
