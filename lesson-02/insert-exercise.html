@@ -62,22 +62,16 @@
       <ul id="sortable">
         <script>
           var statements = [
-            '&lt;!DOCTYPE html&gt;',
-            '&lt;html&gt;',
-            '&nbsp;&nbsp;&lt;head&gt;',
-            '&nbsp;&nbsp;&nbsp;&nbsp;&lt;title&gt;Sort It!&lt;/title&gt;',
-            '&nbsp;&nbsp;&lt;/head&gt;',
-            '&nbsp;&nbsp;&lt;body&gt;',
-            '&nbsp;&nbsp;&nbsp;&nbsp;&lt;?php',
-            '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$conn = new PDO(\'mysql:host=sql.computerstudi.es;dbname=gcdatabase\', \'gcusername\', \'password-here\');',
-            '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (!$conn) {',
-            '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;die( \'Could not connect.\' );',
-            '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else {',
-            '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo \'Connected to the database\'; )',
-            '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}',
-            '&nbsp;&nbsp;&nbsp;&nbsp;?&gt;',
-            '&nbsp;&nbsp;&lt;/body&gt;',
-            '&lt;/html&gt;'
+            '&lt;?php',
+            '&nbsp;&nbsp;$dbh = new PDO( "mysql:host=localhost;dbname=my-database", "username", "password" );',
+            '&nbsp;&nbsp;$dbh->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );',
+            '&nbsp;&nbsp;$sql = "INSERT INTO artists (name, bio_link) VALUES (:name, :bio_link)";',
+            '&nbsp;&nbsp;$sth = $dbh->prepare( $sql );',
+            '&nbsp;&nbsp;$sth->bindParam( \':name\', $artist_name, PDO::PARAM_STR, 50 );',
+            '&nbsp;&nbsp;$sth->bindParam( \':bio_link\', $bio_link, PDO::PARAM_STR, 100 );',
+            '&nbsp;&nbsp;$sth->execute();',
+            '&nbsp;&nbsp;$dbh = null;',
+            '?&gt;'
           ];
           
           var shuffled = _.shuffle(statements);
