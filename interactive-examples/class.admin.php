@@ -16,7 +16,7 @@
       $db->bind( ':password', $password );
       $db->execute();
 
-      echo $db->error;
+      error_log($db->error);
 
       if ( session_status() == PHP_SESSION_NONE ) {
         session_start();

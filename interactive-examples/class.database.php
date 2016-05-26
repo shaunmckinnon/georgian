@@ -35,8 +35,10 @@
     public function query ( $query ) {
       try {
         $this->stmt = $this->dbh->prepare( $query );
+        error_log( $query );
       } catch ( PDOException $e ) {
         $this->error = $e->getMessage();
+        error_log($db->error);
       }
     }
 
@@ -60,6 +62,7 @@
         $this->stmt->bindValue($param, $value, $type);
       } catch ( PDOException $e ) {
         $this->error = $e->getMessage();
+        error_log($db->error);
       }
     }
 
@@ -68,6 +71,7 @@
         return $this->stmt->execute();
       } catch ( PDOException $e ) {
         $this->error = $e->getMessage();
+        error_log($db->error);
       }
     }
 
@@ -77,6 +81,7 @@
         return $this->stmt->fetchAll(PDO::FETCH_ASSOC);
       } catch ( PDOException $e ) {
         $this->error = $e->getMessage();
+        error_log($db->error);
       }
     }
 
@@ -86,6 +91,7 @@
         return $this->stmt->fetch(PDO::FETCH_ASSOC);
       } catch ( PDOException $e ) {
         $this->error = $e->getMessage();
+        error_log($db->error);
       }
     }
 
@@ -94,6 +100,7 @@
         return $this->stmt->rowCount();
       } catch ( PDOException $e ) {
         $this->error = $e->getMessage();
+        error_log($db->error);
       }
     }
 
@@ -102,6 +109,7 @@
         return $this->dbh->lastInsertId();
       } catch ( PDOException $e ) {
         $this->error = $e->getMessage();
+        error_log($db->error);
       }
     }
 
@@ -110,6 +118,7 @@
         return $this->dbh->beginTransaction();
       } catch ( PDOException $e ) {
         $this->error = $e->getMessage();
+        error_log($db->error);
       }
     }
 
@@ -118,6 +127,7 @@
         return $this->dbh->commit();
       } catch ( PDOException $e ) {
         $this->error = $e->getMessage();
+        error_log($db->error);
       }
     }
 
@@ -126,6 +136,7 @@
         return $this->dbh->rollBack();
       } catch ( PDOException $e ) {
         $this->error = $e->getMessage();
+        error_log($db->error);
       }
     }
 
@@ -134,6 +145,7 @@
         return $this->stmt->debugDumpParams();
       } catch ( PDOException $e ) {
         $this->error = $e->getMessage();
+        error_log($db->error);
       }
     }
 
@@ -142,6 +154,7 @@
         $this->dbh = null;
       } catch ( PDOException $e ) {
         $this->error = $e->getMessage();
+        error_log($db->error);
       }
     }
 
