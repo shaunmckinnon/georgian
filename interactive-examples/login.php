@@ -3,11 +3,7 @@
   require_once 'class.admin.php';
 
   if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
-    if (Admin::verify( $_POST['username'], $_POST['password'] ) ) {
-      echo 'You were logged in successfully';
-    } else {
-      echo 'Sorry, but there was an error';
-    }
+    Admin::verify( $_POST['username'], $_POST['password'] );
   }
 
   if ( Admin::verified() ) {
