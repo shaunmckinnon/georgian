@@ -15,8 +15,6 @@
     private $stmt;
 
     public function __construct () {
-      error_log("CONNECTION DETAILS: host = {$this->host}, db_name = {$this->dbname}, user = {$this->user}, pass = {$this->pass}");
-
       // Set DSN
       $dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->dbname;
 
@@ -29,13 +27,6 @@
       // create a new PDO instance
       try {
         $this->dbh = new PDO( $dsn, $this->user, $this->pass, $options );
-
-        // test the connection
-        $sql = 'SELECT * FROM scm_admin';
-        $stmt = $this->dbh->prepare($sql);
-        $stmt->execute();
-        $result = $stmt->fetchAll();
-        error_log(var_dump($result));
       } catch ( PDOException $e ) {
         $this->error = $e->getMessage();
         error_log('FAILED DATABASE CONNECTION' . $db->error);
