@@ -48,6 +48,7 @@
             <tr>
               <td>Game Code</td>
               <td>Date</td>
+              <td>Winners Page</td>
               <td>Activate/Deactivate</td>
               <td>Delete</td>
             </tr>
@@ -57,6 +58,7 @@
               <tr>
                 <td><?= $result['code'] ?></td>
                 <td><?= $result['date'] ?></td>
+                <td><a href="winners.php?game_code_id=<?= $result['id'] ?>"><i fa fa-eye></i>winners</a></td>
                 <?php if ( $result['active'] ): ?>
                   <td><form method="post" action="<?= $_SERVER['PHP_SELF'] ?>"><input type="hidden" name="id" value="<?= $result['id'] ?>" name=""><input type="hidden" name="command" value="deactivate"><button type="submit" class="btn btn-warning"><i class="fa fa-ban"></i></button></form></td>
                 <?php else: ?>
