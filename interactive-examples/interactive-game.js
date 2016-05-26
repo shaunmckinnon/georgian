@@ -26,8 +26,10 @@ InteractiveGame.prototype.initSortable = function () {
       thus.orderCheck( lisArray );
     },
     start: function () {
-      if ( this.startTime == undefined ) {
-        this.startTime = new Date().getTime / 1000;
+      if ( thus.startTime == undefined ) {
+        console.log('Starting timer');
+        thus.startTime = new Date().getTime() / 1000;
+        console.log(thus.startTime);
       }
     },
     stop: function () {
