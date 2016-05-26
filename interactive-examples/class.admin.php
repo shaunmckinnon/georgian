@@ -5,6 +5,8 @@
   class Admin extends Database {
 
     public static function verify ( $username, $password, $table = 'scm_admin' ) {
+      error_log("LOG: Verifying User\n");
+
       $db = new Database();
       $db->query('SELECT COUNT(*) FROM ' . $table . ' WHERE username = :username AND password = :password ' );
 
@@ -16,8 +18,6 @@
       $db->bind( ':password', $password );
       $db->execute();
 
-      error_log($db->error);
-
       if ( session_status() == PHP_SESSION_NONE ) {
         session_start();
       }
@@ -27,6 +27,8 @@
     }
 
     public static function verified () {
+      error_log("LOG: Checking if user is verified\n");
+
       if ( session_status() == PHP_SESSION_NONE ) {
         session_start();
       }
@@ -39,6 +41,8 @@
     }
 
     public static function notVerifiedRedirect ( $location ) {
+      error_log("LOG: Checking if user is verified then redirecting\n");
+
       if ( Admin::verified() == false ) {
         header( 'Location: ' . $location );
       }

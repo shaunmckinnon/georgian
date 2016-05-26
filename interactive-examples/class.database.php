@@ -29,10 +29,13 @@
         $this->dbh = new PDO( $dsn, $this->user, $this->pass, $options );
       } catch ( PDOException $e ) {
         $this->error = $e->getMessage();
+        error_log($db->error);
       }
     }
 
     public function query ( $query ) {
+      error_log("QUERY: {$query}");
+      
       try {
         $this->stmt = $this->dbh->prepare( $query );
         error_log( $query );
