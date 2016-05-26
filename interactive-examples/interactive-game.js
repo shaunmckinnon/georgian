@@ -2,7 +2,7 @@
 // constructor
 function InteractiveGame ( options ) {
   this.options = options                                || {};
-  this.startTime = this.options.startTime               || new Date().getTime() / 1000;
+  this.startTime = this.options.startTime               || undefined;
   this.gameArray = this.options.gameArray               || [];
   this.sortableSelector = this.options.sortable         || '#sortable';
   this.codeLanguage = this.options.codeLanguage         || 'php';
@@ -24,6 +24,11 @@ InteractiveGame.prototype.initSortable = function () {
     create: function () {
       var lisArray = $( thus.sortableSelector ).find( 'li' );
       thus.orderCheck( lisArray );
+    },
+    start: function () {
+      if ( this.startTime == undefined ) {
+        this.startTime = new Date().getTime / 1000;
+      }
     },
     stop: function () {
       var lisArray = $( thus.sortableSelector ).find( 'li' );
