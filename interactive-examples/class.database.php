@@ -4,15 +4,17 @@
 
   class Database {
     
-    public $host = DB_HOST;
-    public $dbname = DB_NAME;
-    public $user = DB_USER;
-    public $pass = DB_PASS;
+    private $host = DB_HOST;
+    private $dbname = DB_NAME;
+    private $user = DB_USER;
+    private $pass = DB_PASS;
 
-    public $dbh;
+    private $dbh;
     public $error;
 
-    public $stmt;
+    private $stmt;
+
+    error_log("CONNECTION DETAILS: host = {DB_HOST}, db_name = {DB_NAME}, user = {DB_USER}, pass = {DB_PASS");
 
     public function __construct () {
       // Set DSN
