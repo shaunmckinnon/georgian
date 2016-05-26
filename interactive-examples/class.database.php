@@ -4,15 +4,15 @@
 
   class Database {
     
-    private $host = DB_HOST;
-    private $dbname = DB_NAME;
-    private $user = DB_USER;
-    private $pass = DB_PASS;
+    public $host = DB_HOST;
+    public $dbname = DB_NAME;
+    public $user = DB_USER;
+    public $pass = DB_PASS;
 
-    private $dbh;
+    public $dbh;
     public $error;
 
-    private $stmt;
+    public $stmt;
 
     public function __construct () {
       // Set DSN
@@ -35,7 +35,7 @@
 
     public function query ( $query ) {
       error_log("QUERY: {$query}");
-      
+
       try {
         $this->stmt = $this->dbh->prepare( $query );
         error_log( $query );
