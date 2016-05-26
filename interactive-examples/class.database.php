@@ -15,7 +15,7 @@
     private $stmt;
 
     public function __construct () {
-      error_log("CONNECTION DETAILS: host = {$this->host}, db_name = {$this->dbname}, user = {$this->user}, pass = {$this->pass");
+      error_log("CONNECTION DETAILS: host = {$this->host}, db_name = {$this->dbname}, user = {$this->user}, pass = {$this->pass}");
 
       // Set DSN
       $dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->dbname;
