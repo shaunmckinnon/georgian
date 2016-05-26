@@ -2,6 +2,8 @@
 
   require_once 'class.game_codes.php';
 
+  Admin::notVerifiedRedirect( 'login.php' );
+
   if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
     $gc = new GameCodes();
 
@@ -11,8 +13,6 @@
       echo 'Game code was created successfully';
     }
   }
-
-  Admin::notVerifiedRedirect( 'login.php' );
 
 ?>
 

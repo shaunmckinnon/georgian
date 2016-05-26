@@ -48,4 +48,20 @@
       }
     }
 
+    public static function logout () {
+      error_log("LOG: Logging Out\n");
+
+      if ( session_status() == PHP_SESSION_NONE ) {
+        session_start();
+      }
+
+      session_unset();
+
+      if ( !isset( $_SESSION['authenticated'] ) ) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
   }

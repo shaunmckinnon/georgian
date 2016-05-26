@@ -2,13 +2,11 @@
   
   require_once 'class.admin.php';
 
-  class GameCodes extends Admin {
+  class GameCodes {
 
     private $db;
 
     public function __construct () {
-      // redirect if not logged in
-      Admin::notVerifiedRedirect( 'login.php' );
       $this->db = new Database();
     }
 

@@ -2,7 +2,7 @@
 
   require_once 'class.game_codes.php' ;
 
-  class InteractiveExampleUsers extends GameCodes {
+  class InteractiveExampleUsers {
 
     private $db;
 
@@ -67,7 +67,7 @@
       $this->db->bind( ':total_time', date( 'H:i:s', mktime(0,0,$total_time) ) );
       $this->db->execute();
 
-      if ( $this->error ) {
+      if ( $this->db->error ) {
         return false;
       } else {
         return true;
