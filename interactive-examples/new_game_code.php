@@ -1,13 +1,17 @@
 <?php
 
-  require_once 'class.admin.php';
+  require_once 'class.game_codes.php';
+
+  Admin::notVerifiedRedirect( 'login.php' );
 
   if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
-    Admin::verify( $_POST['username'], $_POST['password'] );
-  }
+    $gc = new GameCodes();
 
-  if ( Admin::verified() ) {
-    header( 'Location: new_game_code.php' );
+    if ( !$gc->createGameCode( $_POST['code'] ) ) {
+      echo 'Game code could not be added due to an error. Probably a duplicate.';
+    } else {
+      echo 'Game code was created successfully';
+    }
   }
 
 ?>
@@ -19,29 +23,24 @@
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
-    <title>Login</title>
+    <title>Add New Game Code</title>
   </head>
 
   <body>
     <div class="container">
+      <?php require_once( 'header.php' ); ?>
 
       <header>
-        <h1 class="page-header">Login</h1>
+        <h1 class="page-header">Add New Game Code</h1>
       </header>
 
       <section>
         <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post">
-          <div class="form-inline">
-            <div class="form-group">
-              <div class="input-group">
-                <label for="username" class="input-group-addon">Enter Username</label>
-                <input class="form-control" type="text" name="username">
-                <label for="password" class="input-group-addon">Enter Password</label>
-                <input class="form-control" type="password" name="password">
-              </div>
-              <div class="form-group">
-                <button class="btn btn-primary">login</button>
-              </div>
+          <div class="input-group">
+            <label for="code" class="input-group-addon">Enter Code</label>
+            <input class="form-control" type="text" name="code" max="16" placeholder="1234123412341234">
+            <div class="input-group-addon">
+              <button><i class="fa fa-plus"></i></button>
             </div>
           </div>
         </form>
