@@ -41,7 +41,4 @@
   // close the DB connection
   $dbh = null;
 
-  // send user to list of artists
-  header('Location: songs.php');
-
 ?>
