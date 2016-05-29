@@ -87,7 +87,7 @@
           <tbody>
             <?php foreach ( $songs as $song ): ?>
               <tr>
-                <td><a href="song.php?id=<?= $song['id'] ?>"><?= $song['title'] ?></a></td>
+                <td><?= $song['title'] ?></td>
                 <td><?= $song['length'] ?></td>
               </tr>
             <?php endforeach ?>
