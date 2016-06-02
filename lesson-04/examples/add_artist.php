@@ -2,28 +2,44 @@
   
   /* Validating And Sanitizing The Data Before We Input It Into The Database */
 
+  // initiate the session so we can pass some information between pages
+  /*
+    session_start() is one of a few functions that modify HTTP headers.
+    Any function that modifies the headers must be run before any output is sent
+    to the screen.
+    If you receive the error
+      "Warning: Cannot modify header information - headers already sent (output started at script:line)"
+    you are outputting something (maybe a whitespace character) before you've called the function.
+  */
+  session_start();
+
   // setting a flag variable to distinguish if the values are good
   $validated = true;
 
-  // validate that the $_POST['artist_name'] contains a value
-  if ( empty($_POST['name']) ) {
+  // set a variable to store the error messages
+  $error_msg = "";
+
+  // assign $_POST values to variables
+  $name = $_POST['name'];
+  $bio_link = $_POST['bio_link'];
+
+  // validate that the $_POST['name'] contains a value
+  if ( empty($name) ) {
+    $error_msg .= "You must provide an artist name.</br>";
     $validated = false;
   } else {
     // sanitize the string
-    $_POST['name'] = filter_var( $_POST['name'], FILTER_SANITIZE_STRING );
+    $aritst_name = filter_var( $name, FILTER_SANITIZE_STRING );
   }
 
   // validate that the bio_link is in an URL format IF the field isn't empty
-  if ( !empty($_POST['bio_link']) && !filter_var($_POST['bio_link'], FILTER_VALIDATE_URL) ) {
+  if ( !empty($bio_link) && !filter_var($bio_link, FILTER_VALIDATE_URL) ) {
+    $error_msg .= "The Bio Link URL must be in the correct format.</br>";
     $validated = false;
   }
 
   // creating a condition to stop this execution if the values aren't valid
   if ( $validated == true ) {
-
-    // assign variables
-    $artist_name = $_POST['name'];
-    $bio_link = $_POST['bio_link'];
     
     // connection to database
     // Heroku
@@ -48,31 +64,27 @@
     $sql = 'INSERT INTO artists (name, bio_link) VALUES (:name, :bio_link)';
 
     // prepare our SQL
-    // ALTER TABLE artists ADD UNIQUE (name);
-    try {
-      $sth = $dbh->prepare( $sql );
-      $sth->bindParam( ':name', $artist_name, PDO::PARAM_STR, 50 );
-      $sth->bindParam( ':bio_link', $bio_link, PDO::PARAM_STR, 100 );
+    $sth = $dbh->prepare( $sql );
+    $sth->bindParam( ':name', $name, PDO::PARAM_STR, 50 );
+    $sth->bindParam( ':bio_link', $bio_link, PDO::PARAM_STR, 100 );
 
-      // execute the SQL
-      $sth->execute();
+    // execute the SQL
+    $sth->execute();
 
-      // close our connection
-      $dbh = null;
+    // close our connection
+    $dbh = null;
 
-      // provide confirmation
-      header( 'Location: new_artist_confirm.php' );
-    } catch ( PDOException $e ) {
-      if ( $e->errorInfo[1] == 1062 ) {
-        // verify that the artist name isn't a duplicate
-        header( 'Location: new_artist_fail.php' );
-      } 
+    // we set the 'success' session variable and store our message
+    $_SESSION['success'] = "Artist was added successfully";
 
-      header( 'Location: new_artist_fail.php' );       
-    }
-
+    // we redirect to a page with a success message
+    header( "Location: add_confirmed.php" );
   } else {
-    header( 'Location: new_artist_fail.php' );
+    // we set the 'fail' session variable and store our message
+    $_SESSION['fail'] = $error_msg;
+
+    // we redirect to a page with the failed message
+    header( 'Location: add_confirmed.php' );
   }
 
 ?>

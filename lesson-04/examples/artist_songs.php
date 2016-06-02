@@ -18,9 +18,8 @@
   $dbh = new PDO( "mysql:host={$host};dbname={$dbname}", $username, $password );
   $dbh->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 
-  // get artist name
+  // build the artist SQL
   $artist_sql = 'SELECT * FROM artists WHERE id = :id';
-  $songs_sql = "SELECT * FROM songs WHERE artist_id = :id";
 
   // assign the GET param to a variable
   $artist_id = $_GET['id'];
@@ -40,6 +39,9 @@
   // close the cursor so we can execute the next statement
   $artist_sth->closeCursor();
 
+  // build the songs SQL
+  $songs_sql = "SELECT * FROM songs WHERE artist_id = :id";
+
   // get songs by artist
   $songs_sth = $dbh->prepare( $songs_sql );
 
@@ -51,6 +53,9 @@
 
   // store the results
   $songs = $songs_sth->fetchAll();
+
+  // count the number of rows returned
+  $row_count = $songs_sth->rowCount();
 
   // close the connection
   $dbh = null;
@@ -74,7 +79,8 @@
           <small><a href="<?= $artist['bio_link'] ?>"><?= $artist['bio_link'] ?></a></small>
         </p>
       </header>
-
+      
+      <?php if ( $row_count > 0 ): ?>
       <section>
         <table class="table">
           <thead>
@@ -94,6 +100,11 @@
           </tbody>
         </table>
       </section>
+      <?php else: ?>
+        <div class="alert alert-info">
+          There are no songs listed for this artist.
+        </div>
+      <?php endif ?>
     </div>
   </body>
 </html>

@@ -1,5 +1,5 @@
 <?php
-  
+
   // connection to database
   // Heroku
   if ( preg_match('/Heroku|georgian\.shaunmckinnon\.ca/i', $_SERVER['HTTP_HOST']) ) {

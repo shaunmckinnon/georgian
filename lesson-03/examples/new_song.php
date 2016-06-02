@@ -15,13 +15,17 @@
     $password = 'root';
   }
 
+  // connect to our database
   $dbh = new PDO( "mysql:host={$host};dbname={$dbname}", $username, $password );
   $dbh->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 
   // build the SQL statment with placeholders
   $sql = 'SELECT id, name FROM artists';
 
+  // prepare, execute, and fetch our resultset
   $result = $dbh->query( $sql );
+
+  // count the rows returned
   $row_count = $result->rowCount();
 
 ?>
@@ -34,6 +38,7 @@
     <title>Add New Song</title>
   </head>
   <body>
+
     <div class='container'>
       <div class='row'>
         <div class='col-xs-12'>
@@ -44,7 +49,7 @@
         <div class='col-xs-12'>
           <section>
             <?php if ($row_count > 0 ): ?>
-              <form action='add_song.php' method='post'>
+              <form action='add_song.php' method='post' data-parsley-validate="">
                 <fieldset>
                   <legend>Song Information</legend>
                   <div class='form-group'>
@@ -52,7 +57,7 @@
                       Artist
                     </label>
                     <select class='form-control' id='artist' name='artist' type='text'>
-                      <option selected='true'>...select an artist...</option>
+                      <option value="">...select an artist...</option>
                       <?php foreach ( $result as list( $id, $name ) ): ?>
                         <option value="<?= $id ?>"><?= $name ?></option>
                       <?php endforeach ?>
@@ -62,21 +67,21 @@
                     <label for='title'>
                       Song Title
                     </label>
-                    <input class='form-control' id='title' name='title' placeholder="We're Going to Be Friends" required type='text'>
+                    <input class='form-control' type="text" name='title' placeholder="We're Going to Be Friends">
                   </div>
                   <div class='form-group'>
                     <div class='form-inline'>
                       <div class='input-group'>
-                        <label class='input-group-addon'>hours</label>
-                        <input class='form-control' id='hours' max='59' min='0' name='length[hours]' type='number'>
+                        <label class='input-group-addon' for="length[hours]">hours</label>
+                        <input class='form-control' max='59' min='0' name='length[hours]'>
                       </div>
                       <div class='input-group'>
-                        <label class='input-group-addon'>minutes</label>
-                        <input class='form-control' id='minutes' max='59' min='0' name='length[minutes]' type='number'>
+                        <label class='input-group-addon' for="length[minutes]">minutes</label>
+                        <input class='form-control' max='59' min='0' name='length[minutes]'>
                       </div>
                       <div class='input-group'>
-                        <label class='input-group-addon'>seconds</label>
-                        <input class='form-control' id='seconds' max='59' min='0' name='length[seconds]' type='number'>
+                        <label class='input-group-addon' for="length[seconds]">seconds</label>
+                        <input class='form-control' max='59' min='0' name='length[seconds]'>
                       </div>
                     </div>
                   </div>

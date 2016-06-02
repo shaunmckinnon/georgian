@@ -1,8 +1,5 @@
 <?php
 
-  // start our session
-  session_start();
-
   // get our connection script
   if ( preg_match('/Heroku|georgian\.shaunmckinnon\.ca/i', $_SERVER['HTTP_HOST']) ) {
     // remote server
@@ -18,13 +15,17 @@
     $password = 'root';
   }
 
+  // connect to our database
   $dbh = new PDO( "mysql:host={$host};dbname={$dbname}", $username, $password );
   $dbh->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 
   // build the SQL statment with placeholders
   $sql = 'SELECT id, name FROM artists';
 
+  // prepare, execute, and fetch our resultset
   $result = $dbh->query( $sql );
+
+  // count the rows returned
   $row_count = $result->rowCount();
 
 ?>
@@ -38,13 +39,6 @@
   </head>
   <body>
 
-    <?php if ( isset($_SESSION['success']) && !empty ($_SESSION['success']) ): ?>
-      <div class="alert alert-success"><?= $_SESSION['success'] ?></div>
-    <?php elseif ( isset($_SESSION['fail']) && !empty ($_SESSION['fail']) ): ?>
-      <div class="alert alert-danger"><?= $_SESSION['fail'] ?></div>
-    <?php endif ?>
-    <?php session_unset() // unset the session variables ?>
-    
     <div class='container'>
       <div class='row'>
         <div class='col-xs-12'>

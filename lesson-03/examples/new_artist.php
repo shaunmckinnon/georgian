@@ -22,7 +22,7 @@
 
             <div class="form-group">
               <label for="bio_link">Bio Link</label>
-              <input class="form-control" type="text" name="bio_link">
+              <input class="form-control" type="url" name="bio_link">
             </div>
 
             <div>

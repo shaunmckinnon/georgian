@@ -1,5 +1,10 @@
 <?php
-  
+
+  // assign $_POST values to variables
+  $artist_id = $_POST['artist'];
+  $title = $_POST['title'];
+  $length = $_POST['length'];
+
   // get our connection script
   if ( preg_match('/Heroku|georgian\.shaunmckinnon\.ca/i', $_SERVER['HTTP_HOST']) ) {
     // remote server
@@ -24,8 +29,9 @@
   // assign our values to variables
   $artist_id = $_POST['artist'];
   $title = $_POST['title'];
-  $no_of_secs = ( $_POST['length']['hours'] * 3600 ) + ( $_POST['length']['minutes'] * 60 ) + $_POST['length']['seconds'];
-  $length = gmdate("H:i:s", $no_of_secs);
+
+  // convert our time to time stamp format
+  $length = "{$length['hours']}:{$length['minutes']}:{$length['seconds']}";
 
   // prepare the SQL statment
   $sth = $dbh->prepare($sql);
@@ -40,5 +46,11 @@
 
   // close the DB connection
   $dbh = null;
+
+  // we set the 'success' session variable and store our message
+  $_SESSION['success'] = "Song was added successfully";
+
+  // we redirect to a page with a success message
+  header( "Location: add_confirmed.php" );
 
 ?>

@@ -1,9 +1,5 @@
 <?php
   
-  // $_POST to variables
-  $artist_name = $_POST['name'];
-  $bio_link = $_POST['bio_link'];
-
   // connection to database
   // Heroku
   if ( preg_match('/Heroku|georgian\.shaunmckinnon\.ca/i', $_SERVER['HTTP_HOST']) ) {
@@ -28,7 +24,7 @@
 
   // prepare our SQL
   $sth = $dbh->prepare( $sql );
-  $sth->bindParam( ':name', $artist_name, PDO::PARAM_STR, 50 );
+  $sth->bindParam( ':name', $name, PDO::PARAM_STR, 50 );
   $sth->bindParam( ':bio_link', $bio_link, PDO::PARAM_STR, 100 );
 
   // execute the SQL
@@ -36,8 +32,5 @@
 
   // close our connection
   $dbh = null;
-
-  // provide confirmation
-  echo "Your artist was saved successfully";
 
 ?>
