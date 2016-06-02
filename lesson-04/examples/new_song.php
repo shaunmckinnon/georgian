@@ -1,5 +1,8 @@
 <?php
 
+  // start our session
+  session_start();
+
   // get our connection script
   if ( preg_match('/Heroku|georgian\.shaunmckinnon\.ca/i', $_SERVER['HTTP_HOST']) ) {
     // remote server
@@ -24,9 +27,6 @@
   $result = $dbh->query( $sql );
   $row_count = $result->rowCount();
 
-  $dbh = null;
-
-  session_start();
 ?>
 
 <!DOCTYPE html>
@@ -37,14 +37,14 @@
     <title>Add New Song</title>
   </head>
   <body>
-    <div class="alert alert-info">
-      <?php
-        if ( isset($_SESSION['message']) ) {
-          echo $_SESSION['message'];
-        }
-        session_unset();
-      ?>
-    </div>
+
+    <?php if ( isset($_SESSION['success']) && !empty ($_SESSION['success']) ): ?>
+      <div class="alert alert-success"><?= $_SESSION['success'] ?></div>
+    <?php elseif ( isset($_SESSION['fail']) && !empty ($_SESSION['fail']) ): ?>
+      <div class="alert alert-danger"><?= $_SESSION['fail'] ?></div>
+    <?php endif ?>
+    <?php session_unset() // unset the session variables ?>
+    
     <div class='container'>
       <div class='row'>
         <div class='col-xs-12'>
@@ -55,7 +55,7 @@
         <div class='col-xs-12'>
           <section>
             <?php if ($row_count > 0 ): ?>
-              <form action='add_song.php' method='post'>
+              <form action='add_song.php' method='post' data-parsley-validate="">
                 <fieldset>
                   <legend>Song Information</legend>
                   <div class='form-group'>
@@ -63,7 +63,7 @@
                       Artist
                     </label>
                     <select class='form-control' id='artist' name='artist' type='text' required>
-                      <option value="" selected='true'>...select an artist...</option>
+                      <option value="">...select an artist...</option>
                       <?php foreach ( $result as list( $id, $name ) ): ?>
                         <option value="<?= $id ?>"><?= $name ?></option>
                       <?php endforeach ?>
@@ -73,21 +73,21 @@
                     <label for='title'>
                       Song Title
                     </label>
-                    <input class='form-control' id='title' name='title' placeholder="We're Going to Be Friends" required maxlength="100" type='text'>
+                    <input class='form-control' type="text" name='title' placeholder="We're Going to Be Friends" required maxlength="100">
                   </div>
                   <div class='form-group'>
                     <div class='form-inline'>
                       <div class='input-group'>
-                        <label class='input-group-addon'>hours</label>
-                        <input class='form-control' id='hours' max='59' min='0' name='length[hours]' type='number'>
+                        <label class='input-group-addon' for="length[hours]">hours</label>
+                        <input class='form-control' max='59' min='0' name='length[hours]' type='number'>
                       </div>
                       <div class='input-group'>
-                        <label class='input-group-addon'>minutes</label>
-                        <input class='form-control' id='minutes' max='59' min='0' name='length[minutes]' type='number'>
+                        <label class='input-group-addon' for="length[minutes]">minutes</label>
+                        <input class='form-control' max='59' min='0' name='length[minutes]' type='number'>
                       </div>
                       <div class='input-group'>
-                        <label class='input-group-addon'>seconds</label>
-                        <input class='form-control' id='seconds' max='59' min='0' name='length[seconds]' type='number'>
+                        <label class='input-group-addon' for="length[seconds]">seconds</label>
+                        <input class='form-control' max='59' min='0' name='length[seconds]' type='number'>
                       </div>
                     </div>
                   </div>
