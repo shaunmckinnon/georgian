@@ -41,8 +41,7 @@
   // creating a condition to stop this execution if the values aren't valid
   if ( $validated == true ) {
     
-    // connection to database
-    // Heroku
+    // SHAUN'S CONNECTION DETAILS (YOU NEED TO USE YOUR OWN OR REPLACE THE VALUES)
     if ( preg_match('/Heroku|georgian\.shaunmckinnon\.ca/i', $_SERVER['HTTP_HOST']) ) {
       // remote server
       $url = parse_url(getenv("CLEARDB_DATABASE_URL"));
@@ -57,6 +56,7 @@
       $password = 'root';
     }
 
+    // connect to the DB
     $dbh = new PDO( "mysql:host={$host};dbname={$dbname}", $username, $password );
     $dbh->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 
