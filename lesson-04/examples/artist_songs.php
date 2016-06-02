@@ -41,6 +41,7 @@
   // close the connection
   $dbh = null;
 
+  session_start();
 ?>
 
 <!DOCTYPE HTML>
@@ -54,6 +55,15 @@
 
   <body>
     <!-- This is a Bootstrap container. Get more info at http://getbootstrap.com/ -->
+    <div class="alert alert-info">
+      <?php
+        if ( isset($_SESSION['message']) ) {
+          echo $_SESSION['message'];
+        }
+        session_unset();
+      ?>
+    </div>
+
     <div class="container">
       <h1 class="page-header"><?= $artist['name'] ?></h1>
       <p><small>
