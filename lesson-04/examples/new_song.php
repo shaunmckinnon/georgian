@@ -20,13 +20,16 @@
   $dbh->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 
   // build the SQL statment with placeholders
-  $sql = 'SELECT id, name FROM artists';
+  $sql = 'SELECT * FROM artists';
 
   // prepare, execute, and fetch our resultset
-  $result = $dbh->query( $sql );
+  $artists = $dbh->query( $sql );
 
   // count the rows returned
   $row_count = $result->rowCount();
+
+  // close the DB
+  $dbh = null;
 
 ?>
 
@@ -58,8 +61,8 @@
                     </label>
                     <select class='form-control' id='artist' name='artist' type='text' required>
                       <option value="">...select an artist...</option>
-                      <?php foreach ( $result as list( $id, $name ) ): ?>
-                        <option value="<?= $id ?>"><?= $name ?></option>
+                      <?php foreach ( $artists as $artist ): ?>
+                        <option value="<?= $artist['id'] ?>"><?= $artist['name'] ?></option>
                       <?php endforeach ?>
                     </select>
                   </div>

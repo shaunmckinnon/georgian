@@ -1,6 +1,6 @@
 <?php
 
-  // get our connection script
+  // SHAUN'S CONNECTION DETAILS (YOU NEED TO USE YOUR OWN OR REPLACE THE VALUES)
   if ( preg_match('/Heroku|georgian\.shaunmckinnon\.ca/i', $_SERVER['HTTP_HOST']) ) {
     // remote server
     $url = parse_url(getenv("CLEARDB_DATABASE_URL"));
@@ -15,7 +15,7 @@
     $password = 'root';
   }
 
-  // connect to our database
+  // connect to our DB
   $dbh = new PDO( "mysql:host={$host};dbname={$dbname}", $username, $password );
   $dbh->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 
@@ -23,10 +23,13 @@
   $sql = 'SELECT id, name FROM artists';
 
   // prepare, execute, and fetch our resultset
-  $result = $dbh->query( $sql );
+  $artists = $dbh->query( $sql );
 
   // count the rows returned
   $row_count = $result->rowCount();
+
+  // close the DB connection
+  $dbh = null;
 
 ?>
 
@@ -58,8 +61,8 @@
                     </label>
                     <select class='form-control' id='artist' name='artist' type='text'>
                       <option value="">...select an artist...</option>
-                      <?php foreach ( $result as list( $id, $name ) ): ?>
-                        <option value="<?= $id ?>"><?= $name ?></option>
+                      <?php foreach ( $artists as $artist ): ?>
+                        <option value="<?= $artist['id'] ?>"><?= $artist['name'] ?></option>
                       <?php endforeach ?>
                     </select>
                   </div>

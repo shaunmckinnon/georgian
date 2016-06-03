@@ -15,6 +15,8 @@
 
   // setting a flag variable to distinguish if the values are good
   $validated = true;
+
+  // set error msg variable
   $error_msg = "";
 
   // assign $_POST values to variables

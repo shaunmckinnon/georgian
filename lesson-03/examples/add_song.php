@@ -5,7 +5,7 @@
   $title = $_POST['title'];
   $length = $_POST['length'];
 
-  // get our connection script
+  // SHAUN'S CONNECTION DETAILS (YOU NEED TO USE YOUR OWN OR REPLACE THE VALUES)
   if ( preg_match('/Heroku|georgian\.shaunmckinnon\.ca/i', $_SERVER['HTTP_HOST']) ) {
     // remote server
     $url = parse_url(getenv("CLEARDB_DATABASE_URL"));
@@ -20,6 +20,7 @@
     $password = 'root';
   }
 
+  // connect to the DB
   $dbh = new PDO( "mysql:host={$host};dbname={$dbname}", $username, $password );
   $dbh->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 
@@ -47,10 +48,7 @@
   // close the DB connection
   $dbh = null;
 
-  // we set the 'success' session variable and store our message
-  $_SESSION['success'] = "Song was added successfully";
-
-  // we redirect to a page with a success message
-  header( "Location: add_confirmed.php" );
+  // provide confirmation
+  echo "Your song was saved successfully";
 
 ?>
