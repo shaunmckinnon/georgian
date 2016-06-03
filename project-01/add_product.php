@@ -1,32 +1,35 @@
 <?php
   
   /* VALIDATE THE DATA */
+  // start the session
+  session_start();
+
   // set an error message variable
   $error_msg = "";
 
   // set a flag variable
-  $all_good = true;
+  $validated = true;
 
   // check if the form has been submitted
   if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
     // check if any of the required fields are empty
     if ( empty($_POST['name']) ) {
       $error_msg .= "You must enter a name.<br>";
-      $all_good = false;
+      $validated = false;
     } else {
       $name = $_POST['name'];
     }
 
     if ( empty($_POST['category_id']) || !is_int($_POST['category_id']) ) {
       $error_msg .= "You must choose a category.<br>";
-      $all_good = false;
+      $validated = false;
     } else {
       $category_id = $_POST['category_id'];
     }
 
     if ( empty($_POST['price']) ) {
       $error_msg .= "You must enter a price.<br>";
-      $all_good = false;
+      $validated = false;
     } else {
       $price = $_POST['price'];
     }
@@ -35,11 +38,11 @@
   } else {
     // form was submitted in error
     $error_msg .= "Please fill out the form first.";
-    $all_good = false;
+    $validated = false;
   }
 
   // if everything is good
-  if ( $all_good == true ) {
+  if ( $validated == true ) {
     // connect to the database
     // Heroku
     if ( preg_match('/Heroku|georgian\.shaunmckinnon\.ca/i', $_SERVER['HTTP_HOST']) ) {
@@ -67,6 +70,8 @@
 
     // prepare our SQL
     $sth = $dbh->prepare( $sql );
+
+    // bind our values
     $sth->bindParam( ':name', $name, PDO::PARAM_STR, 100 );
     $sth->bindParam( ':description', $description, PDO::PARAM_STR, 500 );
     $sth->bindParam( ':price', $price);
@@ -83,7 +88,6 @@
     header( "Location: products.php" );
   } else { // not all good
     // return user to form with an error message
-    session_start();
     $_SESSION['fail'] = $error_msg;
     header( "Location: new_product.php" );
   }

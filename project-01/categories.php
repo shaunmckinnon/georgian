@@ -29,7 +29,7 @@
   $sth->execute();
 
   // get all of the results
-  $result = $sth->fetchAll();
+  $categories = $sth->fetchAll();
 
   // count the results
   $row_count = $sth->rowCount();
@@ -81,10 +81,10 @@
             </tr>
           </thead>
           <tbody>
-            <?php foreach ( $result as $row ): ?>
+            <?php foreach ( $categories as $category ): ?>
               <tr>
-                <td><a href="category_products.php?id=<?= $row['id'] ?>"><?= $row['name'] ?></a></td>
-                <td><?= $row['description'] ?></td>
+                <td><a href="category_products.php?id=<?= $category['id'] ?>"><?= $category['name'] ?></a></td>
+                <td><?= $category['description'] ?></td>
               </tr>
             <?php endforeach ?>
           </tbody>

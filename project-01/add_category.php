@@ -1,31 +1,33 @@
 <?php
   
   /* VALIDATE THE DATA */
+  // start the session
+  session_start();
+
   // set an error message variable
   $error_msg = "";
 
   // set a flag variable
-  $all_good = true;
+  $validated = true;
 
   // check if the form has been submitted
   if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
     // check if any of the required fields are empty
     if ( empty($_POST['name']) ) {
       $error_msg .= "You must enter a name.";
-      $all_good = false;
+      $validated = false;
     } else {
       $name = $_POST['name'];
     }
   } else {
     // form was submitted in error
     $error_msg .= "Please fill out the form first.";
-    $all_good = false;
+    $validated = false;
   }
 
   // if everything is good
-  if ( $all_good == true ) {
-    // connect to the database
-    // Heroku
+  if ( $validated == true ) {
+    // SHAUN'S CONNECTION DETAILS (YOU NEED TO USE YOUR OWN OR REPLACE THE VALUES)
     if ( preg_match('/Heroku|georgian\.shaunmckinnon\.ca/i', $_SERVER['HTTP_HOST']) ) {
       // remote server
       $url = parse_url(getenv("CLEARDB_DATABASE_URL"));
@@ -51,6 +53,8 @@
 
     // prepare our SQL
     $sth = $dbh->prepare( $sql );
+
+    // bind our values
     $sth->bindParam( ':name', $name, PDO::PARAM_STR, 100 );
     $sth->bindParam( ':description', $description, PDO::PARAM_STR, 500 );
 
@@ -61,12 +65,10 @@
     $dbh = null;
 
     // return to products.php
-    session_start();
     $_SESSION['success'] = "New category, {$name}, was added successfully.";
     header( "Location: categories.php" );
-  } else { // not all good
+  } else {
     // return user to form with an error message
-    session_start();
     $_SESSION['fail'] = $error_msg;
     header( "Location: new_category.php" );
   }

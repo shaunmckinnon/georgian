@@ -111,11 +111,11 @@
             </tr>
           </thead>
           <tbody>
-            <?php foreach ( $products as $row ): ?>
+            <?php foreach ( $products as $product ): ?>
               <tr>
-                <td><?= $row['name'] ?></td>
-                <td><?= $row['description'] ?></td>
-                <td><?= $row['price'] ?></td>
+                <td><?= $product['name'] ?></td>
+                <td><?= $product['description'] ?></td>
+                <td><?= $product['price'] ?></td>
               </tr>
             <?php endforeach ?>
           </tbody>

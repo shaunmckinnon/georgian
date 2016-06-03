@@ -30,7 +30,7 @@
   $sth->execute();
 
   // get all of the results
-  $result = $sth->fetchAll();
+  $categories = $sth->fetchAll();
 
   // count the results
   $row_count = $sth->rowCount();
@@ -79,8 +79,8 @@
             <label for="category_id">Category</label>
             <select name="category_id" required>
               <option selected>...select a category...</option>
-              <?php foreach ( $result as $row ): ?>
-                <option value="<?= $row['id'] ?>"><?= $row['name'] ?></option>
+              <?php foreach ( $categories as $category ): ?>
+                <option value="<?= $category['id'] ?>"><?= $category['name'] ?></option>
               <?php endforeach ?>
             </select>
           </div>
