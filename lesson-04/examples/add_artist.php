@@ -1,13 +1,13 @@
 <?php
   
-  // start session
-  session_start();
-
   // assign post values to variables
   $name = $_POST['name'];
   $bio_link = $_POST['bio_link'];
 
-  /* Validate the User Input */
+  /* Validate User Input */
+  // start the session
+  session_start();
+
   // create a flag variable to manage validation state
   $validated = true;
 
@@ -26,7 +26,7 @@
     $name = filter_var( $name, FILTER_SANITIZE_STRING );
   }
 
-  // check if url was entered and is valid
+  // check if the URL is empty, and IF it isn't, validate that its an URL
   if ( !empty( $bio_link ) && !filter_var( $bio_link, FILTER_VALIDATE_URL ) ) {
     // concatenate an error message
     $error_msg .= "The bio link must be in a valid URL format.<br>";
@@ -34,10 +34,11 @@
     // set the validation state
     $validated = false;
   }
+  // DON'T FORGET TO FORMAT THE URL IN artists.php AND artist_songs.php //
 
-  // if the validation has failed
+  // if the validation has failed, redirect the user to the our confirmation page
   if ( $validated == false ) {
-    // set our session message variable
+    // set our session variable with the error message
     $_SESSION['fail'] = "The artist could not be added:<br>{$error_msg}";
 
     // redirect the user and exit the script
@@ -81,10 +82,10 @@
   $dbh = null;
 
   // provide confirmation
-  // define a success message
-  $_SESSION['success'] = "The artist, {$name}, was added successfully.<br>";
+  // set our session variable with the error message
+  $_SESSION['success'] = "You have added the artist, {$name}, successfully.";
 
-  // redirect the user
+  // redirect the user and exit the script
   header( 'Location: confirmed.php' );
   exit;
 

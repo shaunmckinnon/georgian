@@ -57,8 +57,8 @@
             <tbody>
               <?php foreach ( $artists as $artist ): ?>
                 <tr>
-                  <td><a href="artist_songs.php?id=<?= $artist['id'] ?>"><?= htmlspecialchars( $artist['name'] ) ?></a></td>
-                  <td><a href="<?= htmlspecialchars( $artist['bio_link'] ) ?>"><?= htmlspecialchars( $artist['bio_link'] ) ?></a></td>
+                  <td><a href="artist_songs.php?id=<?= $artist['id'] ?>"><?= strip_tags($artist['name']) ?></a></td>
+                  <td><a href="<?= htmlspecialchars( $artist['bio_link'] ) ?>"><?= strip_tags($artist['bio_link']) ?></a></td>
                 </tr>
               <?php endforeach ?>
             </tbody>

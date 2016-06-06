@@ -77,7 +77,7 @@
           <?= $artist['name'] ?>
         </h1>
         <p>
-          <small><a href="<?= $artist['bio_link'] ?>"><?= $artist['bio_link'] ?></a></small>
+          <small><a href="<?= htmlspecialchars($artist['bio_link']) ?>"><?= strip_tags($artist['bio_link']) ?></a></small>
         </p>
       </header>
       
@@ -94,8 +94,8 @@
           <tbody>
             <?php foreach ( $songs as $song ): ?>
               <tr>
-                <td><?= $song['title'] ?></td>
-                <td><?= $song['length'] ?></td>
+                <td><?= strip_tags($song['title']) ?></td>
+                <td><?= strip_tags($song['length']) ?></td>
               </tr>
             <?php endforeach ?>
           </tbody>

@@ -62,7 +62,7 @@
                     <select class='form-control' id='artist' name='artist' type='text' required>
                       <option value="">...select an artist...</option>
                       <?php foreach ( $artists as $artist ): ?>
-                        <option value="<?= $artist['id'] ?>"><?= strip_tags( $artist['name'], '<br>' ); ?></option>
+                        <option value="<?= htmlspecialchars($artist['id']) ?>"><?= strip_tags($artist['name']) ?></option>
                       <?php endforeach ?>
                     </select>
                   </div>

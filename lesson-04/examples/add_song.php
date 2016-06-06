@@ -1,21 +1,21 @@
 <?php
-  
-  // start session
-  session_start();
 
   // assign $_POST values to variables
   $artist_id = $_POST['artist'];
   $title = $_POST['title'];
-  $length = implode( ":", $_POST['length'] );
+  $length = implode(":", $_POST['length']);
 
-  /* Validate the User Input */
+  /* Validate User Input */
+  // start the session
+  session_start();
+
   // create a flag variable to manage validation state
   $validated = true;
 
   // create a message variable to hold our error message
   $error_msg = "";
 
-  // validate that an artist was selected
+  // validate that the artist has been selected
   if ( empty( $artist_id ) ) {
     // concatenate an error message
     $error_msg .= "An artist must be selected.<br>";
@@ -24,10 +24,10 @@
     $validated = false;
   }
 
-  // check if the name was passed empty
+  // validate the song title isn't empty
   if ( empty( $title ) ) {
     // concatenate an error message
-    $error_msg .= "The song title is required.<br>";
+    $error_msg .= "The song title can't be empty.<br>";
 
     // set the validation state
     $validated = false;
@@ -36,13 +36,13 @@
     $title = filter_var( $title, FILTER_SANITIZE_STRING );
   }
 
-  // convert the length to null if it's empty '::'
+  // convert length to null if its empty
   if ( preg_match( "/^\:\:$/", $length ) ) {
     $length = null;
   }
 
-  // validate if the length isn't empty and doesn't match the time pattern (0:0:0 or 00:00:00)
-  if ( !empty( $length ) && !preg_match( "/^([0-9]|[0-1][0-0]|2[0-3])\:([0-9]|[0-5][0-9])\:([0-9]|[0-5][0-9])$/", $length ) ) {
+  // validate if the length isn't empty and doesn't match the time pattern
+  if ( !empty( $length ) && !preg_match("/^([0-9]|0[0-9]|1[0-9]|2[0-3])\:([0-9]|[0-5][0-9])\:([0-9]|[0-5][0-9])$/", $length) ) {
     // concatenate an error message
     $error_msg .= "The song length isn't in the valid format.<br>";
 
@@ -50,9 +50,9 @@
     $validated = false;
   }
 
-  // if the validation has failed
+  // if the validation has failed, redirect the user to the our confirmation page
   if ( $validated == false ) {
-    // set our session message variable
+    // set our session variable with the error message
     $_SESSION['fail'] = "The song could not be added:<br>{$error_msg}";
 
     // redirect the user and exit the script
@@ -90,7 +90,7 @@
   $sth = $dbh->prepare($sql);
 
   // bind the values
-  $sth->bindParam(':artist_id', $artist_id);
+  $sth->bindParam(':artist_id', $artist_id, PDO::PARAM_INT);
   $sth->bindParam(':title', $title, PDO::PARAM_STR, 100);
   $sth->bindParam(':length', $length, PDO::PARAM_STR);
 
@@ -101,10 +101,10 @@
   $dbh = null;
 
   // provide confirmation
-  // define a success message
-  $_SESSION['success'] = "The song, {$title}, was added successfully.<br>";
+  // set our session variable with the error message
+  $_SESSION['success'] = "You have added the song, {$title}, successfully.";
 
-  // redirect the user
+  // redirect the user and exit the script
   header( 'Location: confirmed.php' );
   exit;
 
