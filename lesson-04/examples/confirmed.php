@@ -35,7 +35,7 @@
   <body>
     <!-- This is a Bootstrap container. Get more info at http://getbootstrap.com/ -->
     <div class="alert alert-<?= $class ?>">
-      <?= $message ?>
+      <?= strip_tags($message) ?>
     </div>
     
     <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
