@@ -15,20 +15,20 @@
     $password = 'root';
   }
 
-  // connect to the db
+  // connect to the DB
   $dbh = new PDO( "mysql:host={$host};dbname={$dbname}", $username, $password );
   $dbh->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 
   // build the SQL statment
   $sql = 'SELECT * FROM artists';
 
-  // prepare, execute, and fetch
+  // prepare, execute, and fetchAll
   $artists = $dbh->query( $sql );
 
   // count the rows
   $row_count = $artists->rowCount();
 
-  // close DB
+  // close the DB connection
   $dbh = null;
 
 ?>
@@ -57,8 +57,8 @@
             <tbody>
               <?php foreach ( $artists as $artist ): ?>
                 <tr>
-                  <td><a href="artist_songs.php?id=<?= $artist['id'] ?>"><?= $artist['name'] ?></a></td>
-                  <td><a href="<?= $artist['bio_link'] ?>"><?= $artist['bio_link'] ?></a></td>
+                  <td><a href="artist_songs.php?id=<?= $artist['id'] ?>"><?= htmlspecialchars( $artist['name'] ) ?></a></td>
+                  <td><a href="<?= htmlspecialchars( $artist['bio_link'] ) ?>"><?= htmlspecialchars( $artist['bio_link'] ) ?></a></td>
                 </tr>
               <?php endforeach ?>
             </tbody>

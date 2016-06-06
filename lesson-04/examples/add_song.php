@@ -1,100 +1,111 @@
 <?php
-
-  /* Validating And Sanitizing The Data Before We Input It Into The Database */
-
-  // initiate the session so we can pass some information between pages
-  /*
-    session_start() is one of a few functions that modify HTTP headers.
-    Any function that modifies the headers must be run before any output is sent
-    to the screen.
-    If you receive the error
-      "Warning: Cannot modify header information - headers already sent (output started at script:line)"
-    you are outputting something (maybe a whitespace character) before you've called the function.
-  */
+  
+  // start session
   session_start();
-
-  // setting a flag variable to distinguish if the values are good
-  $validated = true;
-
-  // set error msg variable
-  $error_msg = "";
 
   // assign $_POST values to variables
   $artist_id = $_POST['artist'];
   $title = $_POST['title'];
-  $length = $_POST['length'];
+  $length = implode( ":", $_POST['length'] );
 
-  // check that the song title isn't empty and sanitize it
-  if ( empty($title) ) {
-    $error_msg .= "You must enter a song title.<br>";
+  /* Validate the User Input */
+  // create a flag variable to manage validation state
+  $validated = true;
+
+  // create a message variable to hold our error message
+  $error_msg = "";
+
+  // validate that an artist was selected
+  if ( empty( $artist_id ) ) {
+    // concatenate an error message
+    $error_msg .= "An artist must be selected.<br>";
+
+    // set the validation state
+    $validated = false;
+  }
+
+  // check if the name was passed empty
+  if ( empty( $title ) ) {
+    // concatenate an error message
+    $error_msg .= "The song title is required.<br>";
+
+    // set the validation state
     $validated = false;
   } else {
-    // sanitize the string and set validated to true
+    // sanitize the data
     $title = filter_var( $title, FILTER_SANITIZE_STRING );
   }
 
-  // check that the artist id isn't empty
-  if ( empty($_POST['artist']) ) {
-    $error_msg .= "You must select an artist.<br>";
+  // convert the length to null if it's empty '::'
+  if ( preg_match( "/^\:\:$/", $length ) ) {
+    $length = null;
+  }
+
+  // validate if the length isn't empty and doesn't match the time pattern (0:0:0 or 00:00:00)
+  if ( !empty( $length ) && !preg_match( "/^([0-9]|[0-1][0-0]|2[0-3])\:([0-9]|[0-5][0-9])\:([0-9]|[0-5][0-9])$/", $length ) ) {
+    // concatenate an error message
+    $error_msg .= "The song length isn't in the valid format.<br>";
+
+    // set the validation state
     $validated = false;
   }
-  
-  if ( $validated == true ) {
 
-    // SHAUN'S CONNECTION DETAILS (YOU NEED TO USE YOUR OWN OR REPLACE THE VALUES)
-    if ( preg_match('/Heroku|georgian\.shaunmckinnon\.ca/i', $_SERVER['HTTP_HOST']) ) {
-      // remote server
-      $url = parse_url(getenv("CLEARDB_DATABASE_URL"));
-      $host = $url["host"];
-      $dbname = substr($url["path"], 1);
-      $username = $url["user"];
-      $password = $url["pass"];
-    } else { // localhost
-      $host = 'localhost';
-      $dbname = 'comp-1006-lesson-examples';
-      $username = 'root';
-      $password = 'root';
-    }
+  // if the validation has failed
+  if ( $validated == false ) {
+    // set our session message variable
+    $_SESSION['fail'] = "The song could not be added:<br>{$error_msg}";
 
-    // connect to the DB
-    $dbh = new PDO( "mysql:host={$host};dbname={$dbname}", $username, $password );
-    $dbh->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-
-    // build the SQL statment with placeholders
-    $sql = 'INSERT INTO songs (artist_id, title, length) VALUES (:artist_id, :title, :length)';
-
-    // assign our values to variables
-    $artist_id = $_POST['artist'];
-    $title = $_POST['title'];
-
-    // convert our time to time stamp format
-    $length = "{$length['hours']}:{$length['minutes']}:{$length['seconds']}";
-
-    // prepare the SQL statment
-    $sth = $dbh->prepare($sql);
-
-    // bind the values
-    $sth->bindParam(':artist_id', $artist_id);
-    $sth->bindParam(':title', $title, PDO::PARAM_STR, 100);
-    $sth->bindParam(':length', $length, PDO::PARAM_STR);
-
-    // execute the SQL
-    $sth->execute();
-
-    // close the DB connection
-    $dbh = null;
-
-    // we set the 'success' session variable and store our message
-    $_SESSION['success'] = "Song was added successfully";
-
-    // we redirect to a page with a success message
-    header( "Location: add_confirmed.php" );
-  } else {
-    // we set the 'fail' session variable and store our message
-    $_SESSION['fail'] = $error_msg;
-
-    // we redirect to a page with the failed message
-    header( 'Location: add_confirmed.php' );
+    // redirect the user and exit the script
+    header( 'Location: confirmed.php' );
+    exit;
   }
+
+  // SHAUN'S CONNECTION DETAILS (YOU NEED TO USE YOUR OWN OR REPLACE THE VALUES)
+  if ( preg_match('/Heroku|georgian\.shaunmckinnon\.ca/i', $_SERVER['HTTP_HOST']) ) {
+    // remote server
+    $url = parse_url(getenv("CLEARDB_DATABASE_URL"));
+    $host = $url["host"];
+    $dbname = substr($url["path"], 1);
+    $username = $url["user"];
+    $password = $url["pass"];
+  } else { // localhost
+    $host = 'localhost';
+    $dbname = 'comp-1006-lesson-examples';
+    $username = 'root';
+    $password = 'root';
+  }
+
+  // connect to the DB
+  $dbh = new PDO( "mysql:host={$host};dbname={$dbname}", $username, $password );
+  $dbh->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+
+  // build the SQL statment with placeholders
+  $sql = 'INSERT INTO songs (artist_id, title, length) VALUES (:artist_id, :title, :length)';
+
+  // assign our values to variables
+  $artist_id = $_POST['artist'];
+  $title = $_POST['title'];
+
+  // prepare the SQL statment
+  $sth = $dbh->prepare($sql);
+
+  // bind the values
+  $sth->bindParam(':artist_id', $artist_id);
+  $sth->bindParam(':title', $title, PDO::PARAM_STR, 100);
+  $sth->bindParam(':length', $length, PDO::PARAM_STR);
+
+  // execute the SQL
+  $sth->execute();
+
+  // close the DB connection
+  $dbh = null;
+
+  // provide confirmation
+  // define a success message
+  $_SESSION['success'] = "The song, {$title}, was added successfully.<br>";
+
+  // redirect the user
+  header( 'Location: confirmed.php' );
+  exit;
 
 ?>

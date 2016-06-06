@@ -15,20 +15,20 @@
     $password = 'root';
   }
 
-  // connect to our database
+  // connect to our DB
   $dbh = new PDO( "mysql:host={$host};dbname={$dbname}", $username, $password );
   $dbh->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 
   // build the SQL statment with placeholders
-  $sql = 'SELECT * FROM artists';
+  $sql = 'SELECT id, name FROM artists';
 
   // prepare, execute, and fetch our resultset
   $artists = $dbh->query( $sql );
 
   // count the rows returned
-  $row_count = $result->rowCount();
+  $row_count = $artists->rowCount();
 
-  // close the DB
+  // close the DB connection
   $dbh = null;
 
 ?>
@@ -62,7 +62,7 @@
                     <select class='form-control' id='artist' name='artist' type='text' required>
                       <option value="">...select an artist...</option>
                       <?php foreach ( $artists as $artist ): ?>
-                        <option value="<?= $artist['id'] ?>"><?= $artist['name'] ?></option>
+                        <option value="<?= $artist['id'] ?>"><?= strip_tags( $artist['name'], '<br>' ); ?></option>
                       <?php endforeach ?>
                     </select>
                   </div>
@@ -70,21 +70,21 @@
                     <label for='title'>
                       Song Title
                     </label>
-                    <input class='form-control' type="text" name='title' placeholder="We're Going to Be Friends" required maxlength="100">
+                    <input class='form-control' type="text" name='title' placeholder="We're Going to Be Friends" required>
                   </div>
                   <div class='form-group'>
                     <div class='form-inline'>
                       <div class='input-group'>
                         <label class='input-group-addon' for="length[hours]">hours</label>
-                        <input class='form-control' max='59' min='0' name='length[hours]' type='number'>
+                        <input class='form-control' max='59' min='0' name='length[hours]' type="number" value="0">
                       </div>
                       <div class='input-group'>
                         <label class='input-group-addon' for="length[minutes]">minutes</label>
-                        <input class='form-control' max='59' min='0' name='length[minutes]' type='number'>
+                        <input class='form-control' max='59' min='0' name='length[minutes]' type="number" value="0">
                       </div>
                       <div class='input-group'>
                         <label class='input-group-addon' for="length[seconds]">seconds</label>
-                        <input class='form-control' max='59' min='0' name='length[seconds]' type='number'>
+                        <input class='form-control' max='59' min='0' name='length[seconds]' type="number" value="0">
                       </div>
                     </div>
                   </div>
