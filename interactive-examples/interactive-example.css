@@ -1,8 +1,0 @@
-ul { list-style-type: none; }
-li { position: relative; overflow: hidden; margin: 0; }
-#sortable > li > .code-block > pre > code { overflow: hidden; }
-#sortable > li > .code-block > pre > code:before { display: none; }
-#sortable > li > .code-block > pre { background-color: transparent; padding: 0.25em; border: none; cursor: move; margin: 0; }
-.fa-arrows { color: #ccc; position: absolute; top: 1em; top: 0.25em; }
-.code-block { display: inline-block; margin: 0; margin-left: 2em; line-height: 1em; height: 1em; }
-.indicator { margin-left: 1em; display: inline-block; position: absolute; right: 1em; top: 0.5em; }
