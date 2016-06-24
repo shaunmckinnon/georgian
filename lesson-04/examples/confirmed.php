@@ -1,31 +1,24 @@
 <?php
 
-  // initiate the session so we can pass some information between pages
-  /*
-    session_start() is one of a few functions that modify HTTP headers.
-    Any function that modifies the headers must be run before any output is sent
-    to the screen.
-    If you receive the error
-      "Warning: Cannot modify header information - headers already sent (output started at script:line)"
-    you are outputting something (maybe a whitespace character) before you've called the function.
-  */
+  // start the session
   session_start();
 
-  // if either the success or fail message are not empty
-  if ( !empty($_SESSION['success']) ) {
-    // assign the success message and set class to 'success'
+  // check if the session variables are NOT empty
+  if ( !empty( $_SESSION['success'] ) ) {
+    // if there is a success message
+    $class = 'success';
     $message = $_SESSION['success'];
-    $class = "success";
-  } else if ( !empty($_SESSION['fail']) ) {
-    // assign the success message and set class to 'success'
+  } else if ( !empty( $_SESSION['fail'] ) ) {
+    // if there is a fail message
+    $class = 'danger';
     $message = $_SESSION['fail'];
-    $class = "danger";
   } else {
-    // the user has stumbled on this page accidentally and needs to be redirected
+    // user has arrived to this page accidentally
+    // redirect the user to artists
     header( 'Location: artists.php' );
   }
 
-  // unregister the session variables (clears them)
+  // clear the session variables
   session_unset();
 
 ?>
@@ -40,8 +33,9 @@
   </head>
 
   <body>
+    <!-- This is a Bootstrap container. Get more info at http://getbootstrap.com/ -->
     <div class="alert alert-<?= $class ?>">
-      <?= $message ?>
+      <?= strip_tags($message) ?>
     </div>
     
     <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>

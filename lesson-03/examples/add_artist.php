@@ -1,5 +1,9 @@
 <?php
   
+  // assign post values to variables
+  $name = $_POST['name'];
+  $bio_link = $_POST['bio_link'];
+
   // SHAUN'S CONNECTION DETAILS (YOU NEED TO USE YOUR OWN OR REPLACE THE VALUES)
   if ( preg_match('/Heroku|georgian\.shaunmckinnon\.ca/i', $_SERVER['HTTP_HOST']) ) {
     // remote server

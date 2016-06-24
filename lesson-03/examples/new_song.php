@@ -26,7 +26,7 @@
   $artists = $dbh->query( $sql );
 
   // count the rows returned
-  $row_count = $result->rowCount();
+  $row_count = $artists->rowCount();
 
   // close the DB connection
   $dbh = null;

@@ -17,12 +17,12 @@
             <legend>Artist Information</legend>
             <div class="form-group">
               <label for="name">Artist Name</label>
-              <input class="form-control" type="text" name="name" required maxlength="50">
+              <input class="form-control" type="text" name="name" required>
             </div>
 
             <div class="form-group">
               <label for="bio_link">Bio Link</label>
-              <input class="form-control" type="url" name="bio_link" maxlength="100">
+              <input class="form-control" type="url" name="bio_link">
             </div>
 
             <div>
