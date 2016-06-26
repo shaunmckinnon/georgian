@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>PHP Connection Exercise</title>
+    <script type="text/javascript" src="http://underscorejs.org/underscore-min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/prism/0.0.1/prism.min.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prism/0.0.1/prism.min.css">
+    <style>
+      ul { list-style-type: none; }
+      li { position: relative; overflow: hidden; margin: 0; }
+      #sortable > li > .code-block > pre > code { overflow: hidden; }
+      #sortable > li > .code-block > pre > code:before { display: none; }
+      #sortable > li > .code-block > pre { background-color: transparent; padding: 0.25em; border: none; cursor: move; margin: 0; }
+      .fa-arrows { color: #ccc; position: absolute; top: 1em; top: 0.25em; }
+      .code-block { display: inline-block; margin: 0; margin-left: 2em; line-height: 1em; height: 1em; }
+      .indicator { margin-left: 1em; display: inline-block; position: absolute; right: 1em; top: 0.5em; }
+    </style>
+    <script>
+      $(function() {
+        $( "#sortable" ).sortable({
+          revert: true,
+          stop: function (event, ui) {
+            var lis = $('ul#sortable > li');
+            var winningOrder = _.range( lis.length );
+            var successes = 0;
+
+            // update current correct items
+            $.each(winningOrder, function (index) {
+              var currentItem = $(lis[index]);
+
+              if ( currentItem.text().trim()  == $.parseHTML(statements[index])[0].data.trim() ) {
+                currentItem.find('.indicator').removeClass('fa-remove text-danger');
+                currentItem.find('.indicator').addClass('fa-check text-success');
+              } else {
+                currentItem.find('.indicator').removeClass('fa-check text-success');
+                currentItem.find('.indicator').addClass('fa-remove text-danger');
+              }
+            });
+
+            successes = $('.fa-check');
+            if ( winningOrder.length == successes.length ) {
+              $('#notify').removeClass('alert-info');
+              $('#notify').addClass('alert-success');
+              $('#notify').text('Congratulations, you have made your connection script!!!');
+            }
+          }
+        });
+
+        $( "ul, li" ).disableSelection();
+      });
+    </script>
+  </head>
+  <body>
+    <div id="notify" class="alert alert-info">Put the following statements into the correct order.</div>
+    <div class="container">
+
+      <ul id="sortable">
+        <script>
+          var statements = [
+            '&lt;?php',
+            '&nbsp;&nbsp;$dbh = new PDO( "mysql:host=localhost;dbname=my-database", "username", "password" );',
+            '&nbsp;&nbsp;$dbh->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );',
+            '&nbsp;&nbsp;$sql = "INSERT INTO artists (name, bio_link) VALUES (:name, :bio_link)";',
+            '&nbsp;&nbsp;$sth = $dbh->prepare( $sql );',
+            '&nbsp;&nbsp;$sth->bindParam( \':name\', $artist_name, PDO::PARAM_STR, 50 );',
+            '&nbsp;&nbsp;$sth->bindParam( \':bio_link\', $bio_link, PDO::PARAM_STR, 100 );',
+            '&nbsp;&nbsp;$sth->execute();',
+            '&nbsp;&nbsp;$dbh = null;',
+            '?&gt;'
+          ];
+          
+          var shuffled = _.shuffle(statements);
+
+          $.each( shuffled, function(i) {
+            $('ul').append('<li class="ui-state-default""><i class="move fa fa-arrows"></i><div class="code-block"><pre><code class="language-php">' + shuffled[i] + '</code></pre></div><i class="indicator fa"></i></li>');
+          });
+        </script>
+      </ul>
+     
+    </div>
+  </body>
+</html>
