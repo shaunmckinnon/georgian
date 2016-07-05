@@ -1,12 +1,17 @@
 <?php
-  
-  /*
-  * Database connection, disconnection, & error messages
+
+  /* require configuration */
+  require_once $_SERVER['DOCUMENT_ROOT'] . '/lesson-08/examples/config/config.database.php';
+
+  /**
+  * Database Class
+  * Connection, disconnection, PDO methods, and common CRUD methods
   */
-  class Database {
+  class Database
+  {
     
     /* Properties */
-    // define connection properties
+    // defined connection properties
     private $host;
     private $dbname;
     private $user;
@@ -17,20 +22,44 @@
     private $sth;
     private $error;
 
-    
-    /* Methods */
-    /* Database connection and error handling methods */
-    // connect to the database
-    public function __construct( $config ) {
-      // set the configurations
-      $this->host = $config['host'];
-      $this->dbname = $config['dbname'];
-      $this->user = $config['user'];
-      $this->password = $config['password'];
 
+    /* Constructor/Initializer */
+    // connect to the database
+    public function __construct () {
+      // set the configuration
+      $this->host = DBHOST;
+      $this->dbname = DBNAME;
+      $this->user = DBUSER;
+      $this->password = DBPASS;
+
+      // connect
       try {
         $this->dbh = new PDO( "mysql:host={$this->host};dbname={$this->dbname}", $this->user, $this->password );
-        $this->dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $this->dbh->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+      } catch ( PDOException $e ) {
+        $this->error = $e;
+      }
+    }
+
+
+    /* Methods */
+    public function get_error () {
+      return is_null( $this->error ) ? false : $this->error->getMessage();
+    }
+
+    public function dump_query () {
+      return $this->sth->debugDumpParams();
+    }
+
+    // prepared
+    public function prepare ( $sql ) {
+      $this->sth = $this->dbh->prepare( $sql );
+    }
+
+    // execute
+    public function execute () {
+      try {
+        $this->sth->execute();
         return true;
       } catch ( PDOException $e ) {
         $this->error = $e;
@@ -38,95 +67,53 @@
       }
     }
 
-    // get the prepared statement
-    public function get_sth () {
-      return $this->sth;
-    }
-
-    // get the error
-    public function get_error_message () {
-      return ( is_null( $this->error ) ) ? false : $this->error->getMessage();
-    }
-
-    // close the cursor
-    public function close_cursor() {
-      $this->sth->closeCursor();
-    }
-
-    // close the connection
-    public function close () {
-      $this->dbh = null;
-    }
-
-
-    /* PDO Methods Simplified */
-    // Prepare SQL
-    public function prepare ( $sql ) {
-      $this->sth = $this->dbh->prepare( $sql );
-    }
-
-    // Query
-    public function query ( $sql ) {
-      return $this->dbh->query( $sql );
-    }
-
-    // Bind Parameters
+    // bind parameters
     public function bind ( $param, $value, $type = null ) {
       // if type isn't set
       if ( is_null( $type ) ) {
-        // auto select the type
         switch ( true ) {
           case is_null( $value ):
             $type = PDO::PARAM_NULL;
             break;
 
-          case is_int( $value ):
+          case is_numeric( $value ):
             $type = PDO::PARAM_INT;
             break;
 
           case is_bool( $value ):
             $type = PDO::PARAM_BOOL;
             break;
-          
+
           default:
             $type = PDO::PARAM_STR;
             break;
         }
       }
 
-      // bind our parameter
       $this->sth->bindParam( $param, $value, $type );
     }
 
-    // Execute SQL
-    public function execute () {
-      try {
-        $this->sth->execute();
-      } catch ( PDOException $e ) {
-        $this->error = $e;
-      }
-    }
-
-    // Fetch a single record
+    // fetch a single record
     public function singleRecord () {
-      try {
-        $result = $this->sth->fetch();
-        $this->close_cursor();
-        return $result;
-      } catch ( PDOException $e ) {
-        $this->error = $e;
-      }
+      return $this->sth->fetch();
     }
 
-    // Fetch all the records
+    // fetch all the records
     public function allRecords () {
-      try {
-        $result = $this->sth->fetchAll();
-        $this->close_cursor();
-        return $result;
-      } catch ( PDOException $e ) {
-        $this->error = $e;
-      }
+      return $this->sth->fetchAll();
     }
 
-  } // close class
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+

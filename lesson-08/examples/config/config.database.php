@@ -18,3 +18,8 @@
       'password' => 'root'
     ];
   }
+
+  define( 'DBHOST', $config['host'] );
+  define( 'DBNAME', $config['dbname'] );
+  define( 'DBUSER', $config['user'] );
+  define( 'DBPASS', $config['password'] );
