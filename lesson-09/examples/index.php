@@ -1,0 +1,1 @@
+<?php header( 'Location: /lesson-09/examples/categories/index.php' );
