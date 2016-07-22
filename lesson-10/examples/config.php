@@ -22,8 +22,8 @@
     $cfg->set_model_directory( $config['model_directory'] );
     $cfg->set_connections( 
       array(
-        'development' => "mysql://{$config['user']}:{$config['password']}@{$config['host']}/{$config['dbname']}"
+        'development' => "mysql://{$config['user']}:{$config['password']}@{$config['host']}/{$config['dbname']}",
+        'production' => "mysql://{$config['user']}:{$config['password']}@{$config['host']}/{$config['dbname']}",
       )
     );
-    error_log( var_dump( $cfg ) );
   });
