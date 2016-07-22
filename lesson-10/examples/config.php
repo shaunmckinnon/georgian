@@ -25,4 +25,5 @@
         'development' => "mysql://{$config['user']}:{$config['password']}@{$config['host']}/{$config['dbname']}"
       )
     );
+    var_dump( $cfg );
   });
