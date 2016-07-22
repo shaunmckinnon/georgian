@@ -43,7 +43,8 @@ function activerecord_autoload($class_name)
 		$root .= DIRECTORY_SEPARATOR . implode($directories, DIRECTORY_SEPARATOR);
 	}
 
-	$file = "$root/$class_name.php";
+	// edited to accomodate lowercased file names
+	$file = strtolower( "$root/$class_name.php" );
 
 	if (file_exists($file))
 		require_once $file;
