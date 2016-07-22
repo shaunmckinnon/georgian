@@ -1,5 +1,5 @@
 <?php
-
+  
   class Category extends ActiveRecord\Model {
 
     // associations/relationships

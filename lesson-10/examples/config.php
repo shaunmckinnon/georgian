@@ -27,5 +27,5 @@
     );
   });
 
-  require $_SERVER['DOCUMENT_ROOT'] . '/lesson-10/examples/models/Category.php';
-  require $_SERVER['DOCUMENT_ROOT'] . '/lesson-10/examples/models/Product.php';
+  require $_SERVER['DOCUMENT_ROOT'] . '/lesson-10/examples/models/category.php';
+  require $_SERVER['DOCUMENT_ROOT'] . '/lesson-10/examples/models/product.php';
