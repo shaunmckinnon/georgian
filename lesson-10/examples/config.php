@@ -9,7 +9,7 @@
     $config['dbname'] = substr($url["path"], 1);
     $config['user'] = $url["user"];
     $config['password'] = $url["pass"];
-    $config['model_directory'] = '/app/lesson-10/examples/models';
+    $config['model_directory'] = '/lesson-10/examples/models';
   } else { // localhost
     $config['host'] = 'localhost';
     $config['dbname'] = 'comp-1006-lesson-examples';
