@@ -6,7 +6,7 @@
   /* ACTION HANDLER */
   // attach PHP ActiveRecord
   require_once $_SERVER['DOCUMENT_ROOT'] . '/lesson-10/examples/config.php';
-  foreach ( $config as $key => $value ) { if ( !in_array( 'password', 'user' ) ) echo $value }
+  foreach ( $config as $key => $value ) { if ( !in_array( 'password', 'user' ) ) echo $value; }
 
   /* VIEWS */
   // index
