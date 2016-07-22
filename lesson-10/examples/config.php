@@ -26,3 +26,6 @@
       )
     );
   });
+
+  require $_SERVER['DOCUMENT_ROOT'] . '/lesson-10/examples/models/Category.php';
+  require $_SERVER['DOCUMENT_ROOT'] . '/lesson-10/examples/models/Product.php';
