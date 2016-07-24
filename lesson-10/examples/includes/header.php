@@ -22,9 +22,9 @@
   </head>
 
   <body>
-    <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/lesson-10/examples/includes/notify.php' ?>
+    <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/lesson-11/examples/includes/notify.php' ?>
     <ul class="nav nav-pills">
-      <li><a href="/lesson-10/examples/categories/?action=index">Categories</a></li>
-      <li><a href="/lesson-10/examples/categories/?action=create">New Category</a></li>
-      <li><a href="/lesson-10/examples/products/?action=create">New Product</a></li>
+      <li><a href="/lesson-11/examples/categories/?action=index">Categories</a></li>
+      <li><a href="/lesson-11/examples/categories/?action=create">New Category</a></li>
+      <li><a href="/lesson-11/examples/products/?action=create">New Product</a></li>
     </ul>

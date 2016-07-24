@@ -5,17 +5,13 @@
 
   /* ACTION HANDLER */
   // attach PHP ActiveRecord
-  require_once $_SERVER['DOCUMENT_ROOT'] . '/lesson-10/examples/config.php';
+  require_once $_SERVER['DOCUMENT_ROOT'] . '/lesson-11/examples/config.php';
 
   /* VIEWS */
   // index
   function index () {
     $categories = Category::all( array( 'order' => 'name' ) );
-    ob_start();
-    include 'views/index.php';
-    $output = ob_get_contents();
-    ob_end_clean();
-    return $output;
+    return get_included_file_contents( 'views/index.php', ['categories' => $categories] );
   }
 
 
@@ -29,38 +25,26 @@
     }
 
     $category = Category::find( $get['id'] );
-    ob_start();
-    include 'views/show.php';
-    $output = ob_get_contents();
-    ob_end_clean();
-    return $output;
+    return get_included_file_contents( 'views/show.php', ['category' => $category] );
   }
 
 
   // create
   function create () {
-    ob_start();
-    include 'views/create.php';
-    $output = ob_get_contents();
-    ob_end_clean();
-    return $output;
+    return get_included_file_contents( 'views/create.php' );
   }
 
 
   // edit
   function edit ( $get ) {
-    if ( isset( $get['id'] ) && Category::exists( $get['id'] ) ) {
-      $category = Category::find( 'first', $get['id'] );
-      ob_start();
-      include 'views/edit.php';
-      $output = ob_get_contents();
-      ob_end_clean();
-      return $output;
-    } else {
+   if ( !isset( $get['id'] ) || !Category::exists( $get['id'] ) ) {
       $_SESSION['fail'] = "You must select a category.";
       header( 'Location: index.php?action=index' );
       exit;
     }
+
+    $category = Category::find( 'first', $get['id'] );
+    return get_included_file_contents( 'views/edit.php', ['category' => $category] );
   }
 
 
@@ -153,36 +137,4 @@
 
 
   // action handler for REQUEST
-  if ( isset( $_REQUEST['action'] ) && in_array( $_REQUEST['action'], ['add', 'update', 'delete', 'index', 'show', 'create', 'edit'] ) ) {
-    $yield = call_user_func( $_REQUEST['action'], $_REQUEST );
-  } else {
-    header( 'Location: ../categories/index.php?action=index' );
-    exit;
-  }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  $yield = action_handler( ['add', 'update', 'delete', 'index', 'show', 'create', 'edit'], $_REQUEST );

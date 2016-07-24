@@ -8,8 +8,7 @@
 
   // output
   echo $yield;
+  
 
   // require the HTML footer
   require_once $_SERVER['DOCUMENT_ROOT'] . '/lesson-11/examples/includes/footer.php';
-
-?>

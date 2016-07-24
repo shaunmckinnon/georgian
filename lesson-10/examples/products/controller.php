@@ -5,17 +5,13 @@
 
   /* ACTION HANDLER */
   // attach PHP ActiveRecord
-  require_once $_SERVER['DOCUMENT_ROOT'] . '/lesson-10/examples/config.php';
+  require_once $_SERVER['DOCUMENT_ROOT'] . '/lesson-11/examples/config.php';
 
   /* VIEWS */
   // create
   function create () {
     $categories = Category::all();
-    ob_start();
-    include 'views/create.php';
-    $output = ob_get_contents();
-    ob_end_clean();
-    return $output;
+    return get_included_file_contents( 'views/create.php', ['categories' => $categories] );
   }
 
 
@@ -29,11 +25,7 @@
 
     $product = Product::find( $get['id'] );
     $categories = Category::all();
-    ob_start();
-    include 'views/edit.php';
-    $output = ob_get_contents();
-    ob_end_clean();
-    return $output;
+    return get_included_file_contents( 'views/edit.php', ['categories' => $categories, 'product' => $product] );
   }
 
 
@@ -113,9 +105,4 @@
 
 
   // action handler for REQUEST
-  if ( isset( $_REQUEST['action'] ) && in_array( $_REQUEST['action'], ['add', 'update', 'delete', 'create', 'edit'] ) ) {
-    $yield = call_user_func( $_REQUEST['action'], $_REQUEST );
-  } else {
-    header( 'Location: ../categories/index.php?action=index' );
-    exit;
-  }
+  $yield = action_handler( ['add', 'update', 'delete', 'create', 'edit'], $_REQUEST );
