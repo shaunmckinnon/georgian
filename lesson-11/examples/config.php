@@ -28,26 +28,24 @@
   });
 
   // our action handler moved into our config file as a function
-  function action_handler ( $actions, $error_redirect ) {
-    if ( isset( $_REQUEST['action'] ) && in_array( $_REQUEST['action'], $actions ) ) {
-      return call_user_func( $_REQUEST['action'], $_REQUEST );
-    } else {
-      header( 'Location: ' . $error_redirect );
-      exit;
+  /*
+  * action_handler ( array $actions, string $error_redirect )
+  * $available_actions is a list of function names defined in executing script
+  */
+  function action_handler ( $available_actions, $request ) {
+    if ( isset( $request['action'] ) && in_array( $request['action'], $available_actions ) ) {
+      return call_user_func( $request['action'], $request );
     }
   }
 
   // pass the params as an array so they can be dynamically built
   function get_included_file_contents ( $path, $params = [] ) {
-    // check if the file doesn't exist
-    if ( !file_exists( $path ) ) return false;
-
     // PHP allows for dynamic variables to be created where the label is decided at runtime
     if ( !empty( $params ) ) {
       foreach ( $params as $label => $value ) { $$label = $value; }
     }
 
-    // start the buffer
+    // start the buffer (PHP will only parse included files. Included files will immediately output, so to prevent this, we have to buffer the current output. ob_start() will begin the buffer process. ob_get_contents() will return the current buffer. ob_end_clean() flushes the content out of the buffer.)
     ob_start();
     include $path;
     $output = ob_get_contents();

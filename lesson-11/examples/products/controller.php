@@ -105,4 +105,4 @@
 
 
   // action handler for REQUEST
-  $yield = action_handler( ['add', 'update', 'delete', 'create', 'edit'], '../categories/index.php?action=index' );
+  $yield = action_handler( ['add', 'update', 'delete', 'create', 'edit'], $_REQUEST );
