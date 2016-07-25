@@ -129,7 +129,22 @@
     exit;
   }
 
-  function delete ( $post ) {}
+  function delete ( $post ) {
+    // redirect user if here accidentally
+    if ( !isset( $post['id'] ) || !User::exists( $post['id'] ) ) {
+      $_SESSION['fail'] = "You must select a category.";
+      header( 'Location: index.php?action=index' );
+      exit;
+    }
+
+    // delete the record
+    $category = User::find( $post['id'] );
+    $category->delete();
+
+    $_SESSION['success'] = 'The user was deleted successfully.';
+    header( 'Location: index.php?action=index' );
+    exit;
+  }
 
 
   /* Authentication */
