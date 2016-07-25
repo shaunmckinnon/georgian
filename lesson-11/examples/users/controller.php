@@ -71,7 +71,7 @@
 
     // set the success message
     $_SESSION['success'] = 'User was created successfully.';
-    header( 'Location: index.php?action=index' );
+    header( 'Location: ../authentication/index.php?action=login' );
     exit;
   }
 
