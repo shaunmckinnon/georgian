@@ -53,6 +53,24 @@
     return $output;
   }
 
+  // an authentication function to check if the request is permitted
+  function request_is_authenticated ( $request, $whitelist ) {
+    if ( isset( $_SESSION['authenticated'] ) && $_SESSION['authenticated'] === true ) {
+      return true;
+    } else {
+      if ( !in_array( $request['action'], $whitelist ) ) {
+        $_SESSION['fail'] = 'You are not authorized.';
+        header( 'Location: ../categories/?action=index' );
+        exit;
+      }
+    }
+  }
+
+  // an authentication function to check if the user is authenticated
+  function is_authenticated () {
+    return isset( $_SESSION['authenticated'] ) && $_SESSION['authenticated'] === true && !empty( $_SESSION['email'] );
+  }
+
 
 
 

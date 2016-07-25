@@ -1,5 +1,5 @@
 <div class="container">
-  <h1 class="page-header">Create Category</h1>
+  <h1 class="page-header">Edit Category</h1>
   
   <?php $action = 'update' ?>
   <?php include 'form.php' ?>

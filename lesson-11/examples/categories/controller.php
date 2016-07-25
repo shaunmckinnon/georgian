@@ -87,7 +87,7 @@
       exit;
     }
 
-    // create a new record
+    // get existing record
     $category = Category::find( $post['id'] );
 
     // assign the values
@@ -134,7 +134,7 @@
 
 
   /* Authentication Block */
-
+  request_is_authenticated( $_REQUEST, ['index', 'show'] );
 
   // action handler for REQUEST
   $yield = action_handler( ['add', 'update', 'delete', 'index', 'show', 'create', 'edit'], $_REQUEST );
