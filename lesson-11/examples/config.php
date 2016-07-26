@@ -55,20 +55,20 @@
 
   // an authentication function to check if the request is permitted
   function request_is_authenticated ( $request, $whitelist ) {
-    if ( isset( $_SESSION['authenticated'] ) && $_SESSION['authenticated'] === true ) {
-      return true;
-    } else {
+    if ( !isset( $_SESSION['authenticated'] ) ) {
       if ( !in_array( $request['action'], $whitelist ) ) {
         $_SESSION['fail'] = 'You are not authorized.';
         header( 'Location: ../categories/?action=index' );
         exit;
       }
     }
+
+    return true;
   }
 
   // an authentication function to check if the user is authenticated
   function is_authenticated () {
-    return isset( $_SESSION['authenticated'] ) && $_SESSION['authenticated'] === true && !empty( $_SESSION['email'] );
+    return isset( $_SESSION['authenticated'] ) && !empty( $_SESSION['email'] );
   }
 
 
