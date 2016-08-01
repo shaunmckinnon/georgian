@@ -27,4 +27,5 @@
       <li><a href="/lesson-12/examples/categories/?action=index">Categories</a></li>
       <li><a href="/lesson-12/examples/categories/?action=create">New Category</a></li>
       <li><a href="/lesson-12/examples/products/?action=create">New Product</a></li>
+      <li><a href="/lesson-12/examples/utilities/?action=product_seeder">Product Seeder</a></li>
     </ul>
