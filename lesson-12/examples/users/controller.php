@@ -64,6 +64,6 @@
 
 
   /* Action Handler & ActiveRecord */
-  require_once $_SERVER['DOCUMENT_ROOT'] . '/lesson-11-starting-files/examples/config.php';
+  require_once $_SERVER['DOCUMENT_ROOT'] . '/lesson-12/examples/config.php';
 
   $yield = action_handler( ['index', 'create', 'edit', 'add', 'update', 'delete'], $_REQUEST );
