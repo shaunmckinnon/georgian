@@ -73,8 +73,12 @@
     $user->first_name = $post['first_name'];
     $user->last_name = $post['last_name'];
     $user->email = $post['email'];
-    $user->password = $post['password'];
-    $user->confirm_password = $post['password'];
+
+    // if there is a password
+    if ( !empty( $post['password'] ) ) {
+      $user->password = $post['password'];
+      $user->confirm_password = $post['password'];
+    }
 
     // when we save, we apply our assigned properties and write them to the DB
     // the passed attribute "false" forces validation to not occur a second time

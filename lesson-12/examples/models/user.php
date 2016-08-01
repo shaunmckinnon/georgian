@@ -6,7 +6,8 @@
     public $confirm_password;
 
 
-    /* Getters */
+    // callbacks
+    static $before_save = array( 'hash_it' );
 
 
     /* Validations */
@@ -33,6 +34,13 @@
       // validate that password matches confirm_password
       if( $this->attribute_is_dirty( 'password' ) && $this->password !== $this->confirm_password ) {
         $this->errors->add( 'password', 'must match the password confirmation.' );
+      }
+    }
+
+    // callbacks
+    public function hash_it () {
+      if ( $this->attribute_is_dirty( 'password' ) ) {
+        $this->password = password_hash( $this->password, PASSWORD_DEFAULT );
       }
     }
 

@@ -39,7 +39,9 @@
 
     // callbacks
     public function hash_it () {
-      $this->password = password_hash( $this->password, PASSWORD_DEFAULT );
+      if ( $this->attribute_is_dirty( 'password' ) ) {
+        $this->password = password_hash( $this->password, PASSWORD_DEFAULT );
+      }
     }
 
   }
