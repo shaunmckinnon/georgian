@@ -5,7 +5,7 @@
 
   /* ACTION HANDLER */
   // attach PHP ActiveRecord
-  require_once $_SERVER['DOCUMENT_ROOT'] . '/lesson-13/examples/config.php';
+  require_once $_SERVER['DOCUMENT_ROOT'] . '/lesson-12/examples/config.php';
 
   /* VIEWS */
   // create

@@ -23,7 +23,7 @@
           <tr>
             <td>
               <?php if ( !empty( $product->image ) ): ?>
-                <img class="img-thumbnail" style="max-width: 100px; max-height: 100px;" src="../uploads/images/<?= $product->image ?>">
+                <img style="max-width: 100px; max-height: 100px;" class="img-thumbnail" src="../uploads/images/<?= $product->image ?>" alt="Product Image">
               <?php endif ?>
             </td>
             <td><?= $product->name ?></td>

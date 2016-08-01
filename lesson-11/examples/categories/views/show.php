@@ -6,7 +6,6 @@
     <table class="table table-striped table-condensed table-hover">
       <thead>
         <tr>
-          <th>Thumbnail</th>
           <th>Name</th>
           <th>Price</th>
           <th>Edit</th>
@@ -17,7 +16,6 @@
       <tbody>
         <?php foreach ( $category->products as $product ): ?>
           <tr>
-            <td><img style="max-width: 100px; max-height: 100px;" class="img-thumbnail" src="../uploads/images/<?= $product->image ?>" alt="Product Image"></td>
             <td><?= $product->name ?></td>
             <td><?= $product->price_formatted ?></td>
             <td><a href="../products/index.php?action=edit&id=<?= $product->id ?>"><i class="fa fa-pencil"></i></a></td>

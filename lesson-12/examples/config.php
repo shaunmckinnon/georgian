@@ -1,6 +1,6 @@
 <?php
 
-  require_once $_SERVER['DOCUMENT_ROOT'] . '/lesson-13/examples/vendors/php-activerecord/ActiveRecord.php';
+  require_once $_SERVER['DOCUMENT_ROOT'] . '/lesson-12/examples/vendors/php-activerecord/ActiveRecord.php';
 
   if ( preg_match('/Heroku|georgian\.shaunmckinnon\.ca/i', $_SERVER['HTTP_HOST']) ) {
     // remote server
@@ -16,7 +16,7 @@
     $config['password'] = 'root';
   }
 
-  $config['model_directory'] = $_SERVER['DOCUMENT_ROOT'] . '/lesson-13/examples/models';
+  $config['model_directory'] = $_SERVER['DOCUMENT_ROOT'] . '/lesson-12/examples/models';
 
   ActiveRecord\Config::initialize( function( $cfg ) use ( $config ) {
     $cfg->set_model_directory( $config['model_directory'] );

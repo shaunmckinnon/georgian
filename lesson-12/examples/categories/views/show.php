@@ -17,7 +17,11 @@
       <tbody>
         <?php foreach ( $category->products as $product ): ?>
           <tr>
-            <td><img style="max-width: 100px; max-height: 100px;" class="img-thumbnail" src="../uploads/images/<?= $product->image ?>" alt="Product Image"></td>
+            <td>
+              <?php if ( !empty( $product->image ) ): ?>
+                <img style="max-width: 100px; max-height: 100px;" class="img-thumbnail" src="../uploads/images/<?= $product->image ?>" alt="Product Image">
+              <?php endif ?>
+            </td>
             <td><?= $product->name ?></td>
             <td><?= $product->price_formatted ?></td>
             <td><a href="../products/index.php?action=edit&id=<?= $product->id ?>"><i class="fa fa-pencil"></i></a></td>
