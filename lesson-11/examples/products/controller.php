@@ -5,7 +5,7 @@
 
   /* ACTION HANDLER */
   // attach PHP ActiveRecord
-  require_once $_SERVER['DOCUMENT_ROOT'] . '/lesson-11/examples/config.php';
+  require_once $_SERVER['DOCUMENT_ROOT'] . '/lesson-13/examples/config.php';
 
   /* VIEWS */
   // create
@@ -32,22 +32,27 @@
   /* PROCESSES */
   // add
   function add ( $post ) {
+    // create the new product
     $product = New Product;
 
+    // assign the values
     $product->name = $post['name'];
     $product->price = $post['price'];
     $product->category_id = $post['category_id'];
 
+    // save the product
     $product->save();
 
+    // redirect with an error if the product is invalid
     if ( $product->is_invalid() ) {
-      $_SESSION['fail'][] = $product->error->full_messages();
+      $_SESSION['fail'][] = $product->errors->full_messages();
       $_SESSION['fail'][] = 'The product could not be created.';
 
       header( 'Location: index.php?action=create' );
       exit;
     }
 
+    // redirect with a success if product was saved
     $_SESSION['success'] = 'Product was created successfully.';
     header( 'Location: ../categories/index.php?action=show&id=' . $product->category->id );
     exit;
@@ -56,20 +61,25 @@
 
   // update
   function update ( $post ) {
+    // redirect if the id wasn't passed or the product does not exist
     if ( !isset( $post['id'] ) || !Product::exists( $post['id'] ) ) {
       $_SESSION['fail'] = 'You must choose a product to edit.';
       header( 'Location: ../categories/index.php?action=index' );
       exit;
     }
 
+    // find the product
     $product = Product::find( $post['id'] );
 
+    // assign the values to product
     $product->name = $post['name'];
     $product->price = $post['price'];
     $product->category_id = $post['category_id'];
 
+    // save the product
     $product->save();
 
+    // if there are validation errors, redirect with an error message
     if ( $product->is_invalid() ) {
       $_SESSION['fail'][] = $product->error->full_messages();
       $_SESSION['fail'][] = 'The product could not be updated.';
@@ -78,6 +88,7 @@
       exit;
     }
 
+    // redirect with a success message
     $_SESSION['success'] = 'Product was updated successfully.';
     header( 'Location: ../categories/index.php?action=show&id=' . $product->category->id );
     exit;
@@ -102,7 +113,6 @@
 
 
   /* Authentication Block */
-  request_is_authenticated( $_REQUEST, [] );
 
 
   // action handler for REQUEST

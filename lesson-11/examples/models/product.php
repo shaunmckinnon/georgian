@@ -40,10 +40,7 @@
     );
 
     static $validates_uniqueness_of = array(
-      array(
-        array( 'name', 'category_id' ),
-        'message' => 'exists for this category already.'
-      )
+      array( array( 'name', 'category_id' ), 'message' => 'exists for this category already.' )
     );
 
     public function validate () {
