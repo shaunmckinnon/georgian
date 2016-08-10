@@ -122,6 +122,6 @@
   require_once $_SERVER['DOCUMENT_ROOT'] . '/lesson-14/examples/config.php';
 
   /* Authentication */
-  request_is_authenticated( $_REQUEST, ['create', 'add', 'test_create', 'test_delete', 'test_update'] );
+  request_is_authenticated( $_REQUEST, ['create', 'add'] );
 
-  $yield = action_handler( ['index', 'create', 'edit', 'add', 'update', 'delete', 'test_create', 'test_delete', 'test_update'], $_REQUEST );
+  $yield = action_handler( ['index', 'create', 'edit', 'add', 'update', 'delete'], $_REQUEST );
