@@ -120,7 +120,7 @@
 
 
   /* Authentication Block */
-
+  request_is_authenticated( $_REQUEST, [] );
 
   // action handler for REQUEST
   $yield = action_handler( ['add', 'update', 'delete', 'create', 'edit'], $_REQUEST );

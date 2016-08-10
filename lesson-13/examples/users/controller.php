@@ -36,7 +36,7 @@
     $user->last_name = $post['last_name'];
     $user->email = $post['email'];
     $user->password = $post['password'];
-    $user->confirm_password = $post['confirm_password'];
+    $user->confirm_password = $post['password'];
 
     // when we save, we apply our assigned properties and write them to the DB
     // the passed attribute "false" forces validation to not occur a second time
@@ -59,11 +59,75 @@
   }
 
   function update ( $post ) {
-    
+    // redirect the user it they arrived accidentally
+    if ( !isset( $post['id'] ) || !User::exists( $post['id'] ) ) {
+      $_SESSION['fail'] = "You must select a user.";
+      header( 'Location: index.php?action=index' );
+      exit;
+    }
+
+    // get existing record
+    $user = User::find( $post['id'] );
+
+    // update the values
+    $user->first_name = $post['first_name'];
+    $user->last_name = $post['last_name'];
+    $user->email = $post['email'];
+
+    // if there is a password
+    if( !empty( $post['password'] ) ) {
+      $user->password = $post['password'];
+      $user->confirm_password = $post['confirm_password'];
+    }
+
+    // save
+    $user->save( false );
+
+    if ( $user->is_invalid() ) {
+      // set fail messages
+      $_SESSION['fail'][] = $user->errors->full_message();
+      $_SESSION['fail'][] = 'The user could not be updated.';
+
+      // redirect
+      header( 'Location: index.php?action=edit&id=' . $user->id );
+      exit;
+    }
+
+    // set the success message
+    $_SESSION['success'] = 'User was updated successfully.';
+    header( 'Location: index.php?action=index' );
+    exit;
+  }
+
+  function delete ( $post ) {
+    // redirect the user it they arrived accidentally
+    if ( !isset( $post['id'] ) || !User::exists( $post['id'] ) ) {
+      $_SESSION['fail'] = "You must select a user.";
+      header( 'Location: index.php?action=index' );
+      exit;
+    }
+
+    // delete the record
+    $user = User::find( $post['id'] );
+    $user->delete();
+
+    $_SESSION['success'] = 'The user was deleted successfully.';
+    header( 'Location: index.php?action=index' );
+    exit;
   }
 
 
   /* Action Handler & ActiveRecord */
   require_once $_SERVER['DOCUMENT_ROOT'] . '/lesson-13/examples/config.php';
 
+  request_is_authenticated( $_REQUEST, ['create', 'add'] );
+
   $yield = action_handler( ['index', 'create', 'edit', 'add', 'update', 'delete'], $_REQUEST );
+
+
+
+
+
+
+
+

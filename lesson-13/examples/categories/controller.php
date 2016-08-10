@@ -134,6 +134,7 @@
 
 
   /* Authentication Block */
+  request_is_authenticated( $_REQUEST, ['index', 'show'] );
 
   // action handler for REQUEST
   $yield = action_handler( ['add', 'update', 'delete', 'index', 'show', 'create', 'edit'], $_REQUEST );

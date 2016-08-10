@@ -25,11 +25,14 @@
     <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/lesson-13/examples/includes/notify.php' ?>
     <ul class="nav nav-pills">
       <li><a href="/lesson-13/examples/categories/?action=index">Categories</a></li>
-      <li><a href="/lesson-13/examples/categories/?action=create">New Category</a></li>
-      <li><a href="/lesson-13/examples/products/?action=create">New Product</a></li>
-      <li><a href="/lesson-13/examples/utilities/?action=product_seeder">Product Seeder</a></li>
-      <li><a href="/lesson-13/examples/users/?action=index">Users</a></li>
-      <li><a href="/lesson-13/examples/authentication/?action=logout"><i class="fa fa-sign-out">&nbsp;</i>Sign Out</a></li>
-      <li><a href="/lesson-13/examples/authentication/?action=login"><i class="fa fa-sign-in">&nbsp;</i>Sign In</a></li>
+      <?php if ( is_authenticated() ): ?>
+        <li><a href="/lesson-13/examples/categories/?action=create">New Category</a></li>
+        <li><a href="/lesson-13/examples/products/?action=create">New Product</a></li>
+        <li><a href="/lesson-13/examples/utilities/?action=product_seeder">Product Seeder</a></li>
+        <li><a href="/lesson-13/examples/users/?action=index">Users</a></li>
+        <li><a href="/lesson-13/examples/authentication/?action=logout"><i class="fa fa-sign-out">&nbsp;</i>Sign Out</a></li>
+      <?php else: ?>
+        <li><a href="/lesson-13/examples/authentication/?action=login"><i class="fa fa-sign-in">&nbsp;</i>Sign In</a></li>
+      <?php endif ?>
       <li><a href="/lesson-13/examples/users/?action=create">New User</a></li>
     </ul>

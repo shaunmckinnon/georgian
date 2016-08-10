@@ -63,6 +63,7 @@
 
 
   /* Authentication Block */
+  request_is_authenticated( $_REQUEST, [] );
 
   // action handler for REQUEST
   $yield = action_handler( ['product_seeder', 'product_seeder_process'], $_REQUEST );
