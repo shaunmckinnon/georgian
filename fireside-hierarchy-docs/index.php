@@ -235,7 +235,7 @@
   $result = html_build_tree( $hierarcy, $tree );
 
   function html_build_tree ( $hierarcy, &$tree ) {
-    $tree = $tree ?? [];
+    $tree = !empty ( $tree ) ? $tree || [];
 
     $tree[] = "<ul>";
     foreach ( $hierarcy as $key => $value ) {
