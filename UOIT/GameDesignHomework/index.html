@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap 4 CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+
+    <!-- FontAwesome -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="main.css">
+
+    <title>User Interface - Homework</title>
+  </head>
+
+
+  <body>
+    <div id="complete-interface">
+      
+      <!-- User Interface Container -->
+      <div id="ui">
+        <div id="health-bar" class="progress" data-toggle="tooltip" title="Player's health. This will deplete as aliens run into you.">
+          <div class="progress-bar progress-bar-striped bg-danger progress-bar-animated" role="progressbar " aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+            <i class="fa fa-heart"></i>
+            <i class="fa fa-heart"></i>
+            <i class="fa fa-heart"></i>
+            <i class="fa fa-heart"></i>
+            <i class="fa fa-heart"></i>
+          </div>
+        </div>
+
+        <div id="score-board" data-toggle="tooltip" title="This will show the player their current score.">
+          <span>Score:&nbsp;</span>
+          <span id="score">0</span>
+        </div>
+      </div>
+      
+      <!-- Game Container -->
+      <div id="game">
+        <div id="main-bg"></div>
+        <div id="ship" data-toggle="tooltip" title="The Player's wonderfully, amazing ship!!!"></div>
+      </div>
+
+    </div>
+
+    <div id="tutorial-interface" data-toggle="tooltip" title="Simple instructions.">
+      <div id="instructions">
+        <ul>
+          <h2>Instructions</h2>
+          <li>W - Follow Mouse Pointer</li>
+          <li>Left Click - Shoot</li>
+          <li><strong>Avoid the aliens!!!</strong></li>
+          <li>Hover over elements to see tooltip</li>
+        </ul>
+      </div>
+    </div>
+    
+    <!-- Live Reload -->
+    <script>document.write('<script src="http://' + (location.host || '${1:localhost}').split(':')[0] + ':${2:35729}/livereload.js?snipver=1"></' + 'script>')</script>
+
+    <!-- Bootstrap 4 JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
+    <!-- Custom JS -->
+    <script type="text/javascript" src="math.js"></script>
+    <script type="text/javascript" src="main.js"></script>
+  </body>
+
+</html>
